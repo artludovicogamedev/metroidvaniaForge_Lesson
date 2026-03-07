@@ -10,6 +10,8 @@ const DEBUGGER = preload("uid://db0arhrb4qi4x")
 @onready var collision_crouch: CollisionShape2D = $CollisionCrouch
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var drop_down_shape_cast: ShapeCast2D = %DropDownShapeCast
+@onready var point_light_2d: PointLight2D = %PointLight2D
+
 
 #endregion
 #region /// export variables 
@@ -39,9 +41,11 @@ var gravity_multiplier : float = 1.0
 
 func _ready() -> void:
 	#clear player if is already preset in node
+	
 	if get_tree().get_first_node_in_group("Player") != self:
 		self.queue_free()
-		
+	point_light_2d.enabled = false
+	
 	initialize_states()
 	self.call_deferred("reparent" , get_tree().root)
 
@@ -119,6 +123,11 @@ func update_direction() -> void :
 			player_sprite.flip_h = true
 		elif direction.x > 0 :
 			player_sprite.flip_h = false
+	pass
+
+func enable_point_light_2d(value : bool) -> void :
+	print("call function : " + str(value))
+	point_light_2d.enabled = value
 	pass
 
 func add_debugger( color : Color = Color.RED) -> void :

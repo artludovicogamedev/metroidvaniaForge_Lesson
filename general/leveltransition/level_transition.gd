@@ -4,6 +4,7 @@ class_name LevelTransition
 extends Node2D
 
 enum SIDE { LEFT , RIGHT , TOP , BOTTOM }
+enum LEVEL_TYPE { DUNGEON, FOREST }
 
 @export_range( 2 , 16 , 1.0 ,"or_greater") var size : int = 2 :
 	set(value) :
@@ -15,6 +16,7 @@ enum SIDE { LEFT , RIGHT , TOP , BOTTOM }
 		location = value
 		apply_area_settings()
 		
+@export var level_type : LEVEL_TYPE = LEVEL_TYPE.FOREST
 @export_file("*.tscn") var target_level : String = "" 
 @export var target_area_name : String = "LevelTransition"
 
@@ -22,7 +24,8 @@ enum SIDE { LEFT , RIGHT , TOP , BOTTOM }
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
-		return	
+		return
+	apply_area_settings()
 	SceneManager.new_scene_ready.connect(on_new_scene_ready)
 	SceneManager.load_scene_finished.connect(on_load_scene_finished)
 	#area_2d.body_entered.connect(_on_player_entered)
@@ -50,7 +53,8 @@ func apply_area_settings() -> void :
 func _on_player_entered( n : Node2D) -> void :
 	#get_tree().change_scene_to_file(target_level)
 	#n is currently the player node
-	SceneManager.transition_scene(target_level, target_area_name , get_offset(n), get_transition_direction())
+	SceneManager.transition_scene(target_level, target_area_name , 
+		get_offset(n), get_transition_direction())
 	pass
 
 func on_new_scene_ready( target_name : String , offset : Vector2 ) -> void :
@@ -58,6 +62,12 @@ func on_new_scene_ready( target_name : String , offset : Vector2 ) -> void :
 	if target_name == name :
 		var player : Node = get_tree().get_first_node_in_group("Player")
 		player.global_position = global_position + offset
+		
+		if level_type == LEVEL_TYPE.DUNGEON :
+			player.enable_point_light_2d(true)
+		else :
+			player.enable_point_light_2d(false)
+			
 	pass
 
 
@@ -82,12 +92,16 @@ func get_offset( player : Node2D)-> Vector2:
 	else: 
 		offset.x = player_pos.x - self.global_position.x
 		if location == SIDE.TOP :
-			offset.y -= 2
+			offset.y -= 10
 		else:
 			offset.y = 48
-	
-	print(offset.x , " " , offset.y)
 	return offset
+
+#func enable_player_point_light () -> void :
+	#if level_type == LEVEL_TYPE.DUNGEON:
+		#print("add light here")
+		#pass
+	#
 
 func get_transition_direction() -> String :
 	match location :

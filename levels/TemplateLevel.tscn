@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnfa56h8as48s"]
+
+[ext_resource type="TileSet" uid="uid://3jgekgndmfkp" path="res://levels/TileSets/forest.tres" id="1_0l1u6"]
+[ext_resource type="Script" uid="uid://b8r2sphs8h8st" path="res://general/scripts/level_bounds.gd" id="2_6ffi2"]
+
+[node name="TemplateLevel" type="Node2D"]
+
+[node name="LevelBounds" type="Node2D" parent="."]
+z_index = 256
+script = ExtResource("2_6ffi2")
+metadata/_custom_type_script = "uid://b8r2sphs8h8st"
+
+[node name="Parallax" type="Node2D" parent="."]
+
+[node name="BG" type="Parallax2D" parent="Parallax"]
+editor_description = "one level below Level Tile map"
+z_index = -3
+scroll_scale = Vector2(0.8, 0)
+
+[node name="BG2" type="Parallax2D" parent="Parallax"]
+editor_description = "Layer behind BG1
+"
+z_index = -6
+scroll_scale = Vector2(0.6, 0)
+
+[node name="BG3" type="Parallax2D" parent="Parallax"]
+editor_description = "put 2nd layer of trees here
+"
+z_index = -9
+scroll_scale = Vector2(0.4, 0)
+
+[node name="BG4" type="Parallax2D" parent="Parallax"]
+editor_description = "2 layers before sky
+"
+z_index = -12
+scroll_scale = Vector2(0.2, 0)
+
+[node name="BG5" type="Parallax2D" parent="Parallax"]
+editor_description = "mountains or clouds
+closest to background
+"
+z_index = -15
+scroll_scale = Vector2(0.1, 0)
+
+[node name="BG6" type="Parallax2D" parent="Parallax"]
+editor_description = "Sky"
+z_index = -18
+scroll_scale = Vector2(0, 0)
+
+[node name="FG" type="Parallax2D" parent="Parallax"]
+editor_description = "usually includes 2 layers
+"
+z_index = 10
+scroll_scale = Vector2(1.4, 1)
+
+[node name="Lighting1" type="Parallax2D" parent="Parallax"]
+editor_description = "usually includes 2 layers
+"
+scroll_scale = Vector2(1.1, 1)
+
+[node name="Lighting2" type="Parallax2D" parent="Parallax"]
+editor_description = "usually includes 2 layers
+"
+scroll_scale = Vector2(1.2, 1)
+
+[node name="AnimatedParallax" type="Parallax2D" parent="Parallax"]
+editor_description = "put something here like mist. 
+1. if meant for mists in front of LevelTilemap. use z index higher than LevelTilemap
+2. if meant for cloud, use Z index 1 level higher than BG6"
+
+[node name="AnimatedParallax2" type="Parallax2D" parent="Parallax"]
+editor_description = "Optional 
+"
+
+[node name="LevelTilemap" type="Node2D" parent="."]
+
+[node name="TMMain" type="TileMapLayer" parent="LevelTilemap"]
+editor_description = "tangible layer with collision"
+tile_set = ExtResource("1_0l1u6")
+
+[node name="TMOP" type="TileMapLayer" parent="LevelTilemap"]
+editor_description = "Tilemap with oneway platforms"
+tile_set = ExtResource("1_0l1u6")
+
+[node name="Props" type="Node2D" parent="."]
+z_index = 1
+
+[node name="Particles" type="Node2D" parent="."]
+editor_description = "put your custom shaders/ particles here"
+z_index = 2
+
+[node name="Transitions" type="Node2D" parent="."]
+editor_description = "put level transition scene here"
