@@ -13,6 +13,7 @@ var persistent_data : Dictionary = {} #data for storing doors, chests , etc..
 
 
 func _ready() -> void:
+	SceneManager.scene_entered.connect(on_scene_entered)
 	pass
 
 func save_game() -> void :
@@ -37,7 +38,8 @@ func save_game() -> void :
 
 func create_new_game_save( slot : int  ) -> void :
 	current_slot = slot
-	var new_game_scene : String = "uid://bi3krjsipmw2b"
+	discovered_areas.clear()
+	var new_game_scene : String = "uid://ci7ccefelmweo"
 	discovered_areas.append(new_game_scene)
 	save_data = {
 		"scene_path" : new_game_scene ,
@@ -75,7 +77,7 @@ func load_game( slot : int ) -> void :
 	#persistent data , accessed by searching string using save_data.get
 	persistent_data = save_data.get("persistent_data" , {}) 
 	discovered_areas = save_data.get("discovered_areas",[])
-	var scene_path : String = save_data.get("scene_path","uid://bi3krjsipmw2b")
+	var scene_path : String = save_data.get("scene_path","uid://ci7ccefelmweo")
 	SceneManager.transition_scene( scene_path , "" , Vector2.ZERO ,"up")
 	await SceneManager.new_scene_ready
 	load_player_stats()
@@ -112,3 +114,14 @@ func get_filename(slot : int) -> String :
 
 func check_if_file_exists( slot : int) -> bool :
 	return FileAccess.file_exists( get_filename( slot ))
+
+func is_area_discovered( scene_uid : String) -> bool :
+	return discovered_areas.has(scene_uid)
+
+func on_scene_entered(scene_uid : String)-> void :
+	if discovered_areas.has(scene_uid): 
+		return
+	else:
+		discovered_areas.append(scene_uid)
+	pass
+	

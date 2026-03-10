@@ -21,10 +21,10 @@ func _on_player_exited( _n : Node)->void :
 	pass
 
 func on_player_interacted(player :Player)->void:
+	Messages.player_healed.emit(player.player_max_hp)
 	SaveManager.save_game()
 	animation_player.play("game_saved")
 	animation_player.seek( 0 )
-	Messages.player_healed.emit(player.player_max_hp)
 	#save game
 	#heal player
 	#play animation - OK

@@ -14,6 +14,7 @@ func _ready() -> void:
 	load_scene_finished.emit()
 	var curscene : String  = get_tree().current_scene.scene_file_path
 	current_scene_uid = ResourceUID.path_to_uid(curscene)
+	scene_entered.emit(current_scene_uid)
 	pass
 	
 func transition_scene(new_scene : String , target_area_name : String , player_offset : Vector2 , dir : String ) -> void :

@@ -16,8 +16,16 @@ const DEBUGGER = preload("uid://db0arhrb4qi4x")
 
 #endregion
 #region /// export variables 
-@export var player_hp : float = 20
-@export var player_max_hp : float = 20
+@export var player_hp : float = 20 :
+	set( value ) :
+		player_hp = clampf(value, 0 , player_max_hp)
+		Messages.player_hp_changed.emit(player_hp, player_max_hp)
+		
+@export var player_max_hp : float = 20 :
+	set( value ) :
+		player_max_hp = value
+		Messages.player_hp_changed.emit(player_hp, player_max_hp)
+		
 @export var double_jump : bool = false
 @export var dash_skill : bool = false
 @export var ground_slam : bool = false
@@ -53,10 +61,13 @@ func _ready() -> void:
 	point_light_2d.energy = light_source_energy
 	cur_hp.text = "HP:" + str(int(player_hp)) + "/" + str(int(player_max_hp))
 	
-	Messages.player_healed.connect(on_player_healed)
+
 	
 	if get_tree().get_first_node_in_group("Player") != self:
-		self.queue_free()
+		self.queue_free()	
+	
+	Messages.player_healed.connect(on_player_healed)
+	Messages.back_to_title.connect(queue_free)
 	point_light_2d.enabled = false
 	
 	initialize_states()
@@ -78,6 +89,12 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("action"):
 		Messages.player_interacted.emit(self)
+	
+	elif event.is_action_pressed("pause"):
+		get_tree().paused = true
+		var pause_menu : PauseMenu = load("res://UI/pauseMenu/PauseMenu.tscn").instantiate()
+		add_child(pause_menu)
+		return
 	
 	change_state( current_state.handle_input(event))
 	

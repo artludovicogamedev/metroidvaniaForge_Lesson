@@ -92,12 +92,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func on_new_game_pressed(slot : int) -> void:
 	SaveManager.create_new_game_save(slot)
-	SceneManager.transition_scene(
-		"uid://ci7ccefelmweo",
-		"",
-		Vector2.ZERO,
-		"up"
-		)
 	pass
 
 func on_load_game_pressed(slot : int) -> void:

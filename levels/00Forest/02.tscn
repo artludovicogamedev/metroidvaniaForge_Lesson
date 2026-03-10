@@ -88,7 +88,7 @@ z_index = 256
 position = Vector2(-8, -496)
 script = ExtResource("1_k15jj")
 width = 928
-height = 1262
+height = 1326
 metadata/_custom_type_script = "uid://b8r2sphs8h8st"
 
 [node name="Parallax" type="Node2D" parent="."]
@@ -353,18 +353,18 @@ size = 10
 target_level = "uid://ci7ccefelmweo"
 
 [node name="LevelTransition2" parent="Transitions" instance=ExtResource("3_wv3f0")]
-position = Vector2(920, 88)
+position = Vector2(922, 92)
 size = 19
 location = 1
 target_level = "uid://c8gmvxta88vqt"
 
 [node name="LevelTransition3" parent="Transitions" instance=ExtResource("3_wv3f0")]
-position = Vector2(-8, -288)
+position = Vector2(-10, -288)
 size = 7
 target_level = "uid://cni8y1vqkjdg6"
 
 [node name="LevelTransition4" parent="Transitions" instance=ExtResource("3_wv3f0")]
-position = Vector2(920, 640)
+position = Vector2(922, 640)
 size = 5
 location = 1
 target_level = "uid://bjdssrin5gtmt"

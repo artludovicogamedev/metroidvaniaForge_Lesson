@@ -257,6 +257,7 @@ color = Color(1, 0.77767587, 0.43423486, 1)
 texture = SubResource("GradientTexture2D_rgyib")
 
 [node name="Debugger" type="Node2D" parent="."]
+visible = false
 
 [node name="curHp" type="Label" parent="Debugger"]
 offset_left = -45.0
