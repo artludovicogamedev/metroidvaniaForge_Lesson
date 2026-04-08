@@ -9,6 +9,10 @@ func init() -> void:
 func enter() -> void:
 	#call this function whenver you enter a new state
 	player.animation_player.play("crouch")
+	if player.previous_state == attack : 
+		player.animation_player.seek(0.15,true) #set to last frame of animnation after attack
+		
+		
 	player.collision_stand.disabled = true
 	player.collision_crouch.disabled = false
 
@@ -18,11 +22,10 @@ func enter() -> void:
 	pass
 
 func exit() -> void:
-	player.collision_stand.disabled = false
-	player.collision_crouch.disabled = true
-
-	player.damage_area_stand.disabled = false
-	player.damage_area_crouch.disabled = true
+	player.collision_stand.set_deferred("disabled", false)
+	player.collision_crouch.set_deferred("disabled", true)
+	player.damage_area_stand.set_deferred("disabled", false)
+	player.damage_area_crouch.set_deferred("disabled", true)
 	
 	#player.player_sprite.scale.y = 1.0
 	#player.player_sprite.position.y = -24
@@ -38,6 +41,10 @@ func handle_input( _event : InputEvent ) -> PlayerState :
 			player.position.y += 4
 			return fall
 		return jump
+		
+	if _event.is_action_pressed("action") and player.player_can_morph():
+		return morph_ball
+		
 	return next_state
 
 func process(_delta: float) -> PlayerState:

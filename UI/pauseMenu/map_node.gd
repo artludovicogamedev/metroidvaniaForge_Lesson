@@ -161,7 +161,6 @@ func display_player_location() -> void :
 	var player : Player = get_tree().get_first_node_in_group("Player")
 	var i : Control = %PlayerIndicator
 	var pos : Vector2 = position
-	print("variable pos value : ", pos)
 	pos += ((player.global_position - indicator_offset) / SCALE_FACTOR)
 	var clamped : Vector2 = Vector2(3,3)
 	pos = pos.clamp(position + clamped, position + size - clamped)

@@ -4,21 +4,21 @@ extends Node2D
 
 const HINT_MAP : Dictionary = {
 	"keyboard" : {
-		"action" : 0, 
+		"interact" : 0, 
 		"attack" : 0,
 		"jump" : 0,
 		"dash" : 0,
 		"up" : 0,
 	},
 	"playstation" : {
-		"action" : 0, 
+		"interact" : 0, 
 		"attack" : 2,
 		"jump" : 1,
 		"dash" : 3,
 		"up" : 4,
 	},	
 	"xbox" : {
-		"action" : 8, 
+		"interact" : 8, 
 		"attack" : 7,
 		"jump" : 5,
 		"dash" : 6,

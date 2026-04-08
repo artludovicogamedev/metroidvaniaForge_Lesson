@@ -33,7 +33,6 @@ func on_player_interacted(_player :Player) -> void :
 	SaveManager.persistent_data[ set_unique_name() ] = "open"
 	activated.emit()
 	set_open()
-	print("Player interacted with switch")
 
 func set_open() -> void :
 	is_door_opened = true
@@ -45,5 +44,4 @@ func set_open() -> void :
 func set_unique_name () -> String :
 	var uname :String = ResourceUID.path_to_uid(owner.scene_file_path) 
 	uname += "/" + get_parent().name + "/" + name
-	print(uname)
 	return uname

@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func _on_player_entered( _n : Node)->void :
 	Messages.player_interacted.connect(on_player_interacted)
-	Messages.input_hint_changed.emit("action")
+	Messages.input_hint_changed.emit("interact")
 	pass
 
 func _on_player_exited( _n : Node)->void :

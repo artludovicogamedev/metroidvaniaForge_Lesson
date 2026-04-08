@@ -16,6 +16,7 @@ size = Vector2(38, 31)
 script = ExtResource("1_ctt4w")
 fixed_hit_count = true
 hit_particles = Array[ExtResource("2_0dey8")]([ExtResource("3_pnsid")])
+doesnotrespawn = null
 metadata/_custom_type_script = "uid://dbtpma31b3x4b"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -25,7 +26,7 @@ region_rect = Rect2(52.781113, 28.145088, 39.410423, 35.062267)
 
 [node name="DamageArea" type="Area2D" parent="."]
 visible = false
-collision_layer = 64
+collision_layer = 192
 collision_mask = 0
 script = ExtResource("5_q250s")
 metadata/_custom_type_script = "uid://cmtvwnsxcioy8"

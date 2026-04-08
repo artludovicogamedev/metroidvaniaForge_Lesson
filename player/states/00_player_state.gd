@@ -17,6 +17,8 @@ var next_state : PlayerState
 @onready var attack: AttackState = %Attack
 @onready var hurt: PlayerHurtState = %Hurt
 @onready var death: DeathState = %Death
+@onready var ground_slam: GroundSlam = %GroundSlam
+@onready var morph_ball: MorphBall = %MorphBall
 
 #endregion
 

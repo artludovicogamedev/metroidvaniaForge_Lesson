@@ -16,3 +16,11 @@ func make_invulnerable(dur : float = 1.0) -> void :
 	await get_tree().create_timer(dur).timeout
 	process_mode = Node.PROCESS_MODE_INHERIT
 	pass
+
+func start_invulnerable() -> void :
+	process_mode = Node.PROCESS_MODE_DISABLED
+	pass
+
+func end_invulnerable() -> void :
+	process_mode = Node.PROCESS_MODE_INHERIT
+	pass

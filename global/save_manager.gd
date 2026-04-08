@@ -149,7 +149,7 @@ func load_configuration()->void:
 		return
 	AudioServer.set_bus_volume_linear(2,config.get_value("audio","music",0.7))
 	AudioServer.set_bus_volume_linear(3,config.get_value("audio","sfx",0.7))
-	AudioServer.set_bus_volume_linear(4,config.get_value("audio","uiic",0.7))
+	AudioServer.set_bus_volume_linear(4,config.get_value("audio","ui",0.7))
 	
 
 	pass

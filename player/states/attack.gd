@@ -6,6 +6,11 @@ const SLASH_AUDIO = preload("uid://cfelmr0dc4te3")
 @export var combotimewindow : float = 0.1
 @export var speed : float = 150
 
+#Dash
+@export var dashcooldownTime : float = 0.15
+var dashcooldownTimer : Timer
+var candash : bool = false
+
 var attackfinished : bool = false
 var attacktimer : float = 0
 var combocounter : int = 0
@@ -17,6 +22,10 @@ func init() -> void:
 	pass
 	
 func enter() -> void:
+	player.hasdashed = false
+	candash = true
+	handle_dash_time_cooldown()
+	
 	player.attack_area.visible = true
 	AttackSequence()
 	player.animation_player.animation_finished.connect(on_animation_finished)
@@ -31,6 +40,9 @@ func exit() -> void:
 	pass
 
 func handle_input( _event : InputEvent ) -> PlayerState :
+	if _event.is_action_pressed("dash") and player.player_can_dash():
+		return dash
+		
 	if _event.is_action_pressed("attack"):
 		attacktimer = combotimewindow
 	return next_state
@@ -75,4 +87,22 @@ func end_attack()-> void :
 				next_state = idle
 		else :
 			next_state = fall
+	pass
+
+func handle_dash_time_cooldown() -> void :
+
+	if player.previous_state != dash :
+		return
+		
+	dashcooldownTimer = Timer.new()
+	add_child(dashcooldownTimer)
+	dashcooldownTimer.one_shot = true
+	dashcooldownTimer.wait_time = dashcooldownTime
+	dashcooldownTimer.timeout.connect(_on_dashtimer_timeout)
+	dashcooldownTimer.start()
+	candash = false 
+	pass
+
+func _on_dashtimer_timeout() -> void :
+	candash	= true
 	pass

@@ -8,14 +8,18 @@ signal damage_taken()
 #endregion
 #region /// onready variables
 
-@onready var sprite_2d: Sprite2D = %Sprite2D
-@onready var attack_sprite_2d: Sprite2D = %AttackSprite2D
+@onready var playersprite: PlayerSprite = %playersprite
+@onready var attack_playersprite: Sprite2D = %AttackSprite2D
 @onready var collision_stand: CollisionShape2D = %CollisionStand
 @onready var collision_crouch: CollisionShape2D = %CollisionCrouch
-
-
+ 
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var drop_down_shape_cast: ShapeCast2D = %DropDownShapeCast
+@onready var ground_slam_shape_cast: ShapeCast2D = %GroundSlamShapeCast
+@onready var walljumpleftraycast: RayCast2D = %walljumpleftraycast
+@onready var walljumprightraycast: RayCast2D = %walljumprightraycast
+
+
 @onready var point_light_2d: PointLight2D = %PointLight2D
 @onready var cur_hp: Label = $Debugger/curHp
  
@@ -24,6 +28,7 @@ signal damage_taken()
 
 @onready var attack_area: AttackArea = %AttackArea
 @onready var damage_area: DamageArea = %DamageArea
+@onready var ground_slam_attack_area: AttackArea = %GroundSlamAttackArea
 
 #region // audio
 @onready var hurt_sfx: AudioStreamPlayer2D = %HurtSFX
@@ -31,6 +36,7 @@ signal damage_taken()
 @onready var land_sfx: AudioStreamPlayer2D = %LandSFX
 @onready var attack_sfx: AudioStreamPlayer2D = %AttackSFX
 @onready var footstep_sfx: AudioStreamPlayer2D = %FootstepSFX
+@onready var dash_sfx: AudioStreamPlayer2D = %DashSFX
 
 #endregion
 
@@ -85,7 +91,8 @@ var previous_state : PlayerState :
 var direction : Vector2 = Vector2.ZERO
 var gravity : float = 980
 var gravity_multiplier : float = 1.0
-
+var hasdashed : bool = false
+var caninteract : bool = false
 #endregion
 
 func _ready() -> void:
@@ -102,6 +109,7 @@ func _ready() -> void:
 	
 	Messages.player_healed.connect(on_player_healed)
 	Messages.back_to_title.connect(queue_free)
+	Messages.input_hint_changed.connect(on_input_hint_changed)
 	damage_area.damage_taken.connect(on_damage_taken)
 	point_light_2d.enabled = false
 	
@@ -159,6 +167,7 @@ func initialize_states() -> void:
 	change_state(current_state) #grab first state / IDLE
 	current_state.enter() # this is the first enter state called through out the game.
 	$Label.text = current_state.name
+	
 	pass
 	
 func change_state(new_state : PlayerState) -> void:
@@ -195,14 +204,14 @@ func update_direction() -> void :
 		
 		if direction.x < 0 :
 			#left
-			sprite_2d.flip_h = true
-			attack_sprite_2d.flip_h = true
-			attack_sprite_2d.position.x = -32
+			playersprite.flip_h = true
+			attack_playersprite.flip_h = true
+			attack_playersprite.position.x = -32
 		elif direction.x > 0 :
 			#right
-			sprite_2d.flip_h = false
-			attack_sprite_2d.flip_h = false
-			attack_sprite_2d.position.x = 32
+			playersprite.flip_h = false
+			attack_playersprite.flip_h = false
+			attack_playersprite.position.x = 32
 	pass
 
 func enable_point_light_2d(value : bool) -> void :
@@ -228,10 +237,23 @@ func on_player_healed( amount : float )->void :
 	pass
 
 func on_damage_taken(attackarea: AttackArea) -> void :
-	
 	if current_state == current_state.death :
 		return
-		
 	player_hp -= attackarea.attack_damage
 	damage_taken.emit()
 	pass
+
+func on_input_hint_changed(inputhint : String) -> void :
+	if inputhint == "interact" :
+		caninteract = true
+	else :
+		caninteract = false
+		pass
+
+func player_can_dash( ) -> bool :
+	return dash_skill and not hasdashed
+
+func player_can_morph() -> bool :
+	if morph_roll == false or caninteract:
+		return false
+	return true
