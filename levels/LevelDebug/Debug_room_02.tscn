@@ -32,3 +32,4 @@ target_area_name = "LevelTransition2"
 position = Vector2(288, 384)
 size = 5
 location = 3
+target_level = "uid://8juvx47je5kc"

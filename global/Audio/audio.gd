@@ -21,7 +21,9 @@ func _ready() -> void:
 	ui_audio_player = ui.get_stream_playback()
 	pass
 
-func play_audio_stream( audio : AudioStream) -> void :
+func play_audio_stream( audio : AudioStream ) -> void :
+	if audio == null:
+		return
 	if ui_audio_player:
 		ui_audio_player.play_stream(audio)
 	pass

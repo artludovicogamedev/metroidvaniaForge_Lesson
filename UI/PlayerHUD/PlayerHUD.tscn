@@ -111,6 +111,7 @@ texture_progress = SubResource("GradientTexture2D_nd67u")
 
 [node name="GameOver" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

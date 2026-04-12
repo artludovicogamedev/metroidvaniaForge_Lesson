@@ -3,12 +3,14 @@ class_name DamageArea
 extends Area2D 
 
 signal damage_taken(attackarea)
+@export var damageaudio : AudioStream
 
 func _ready() -> void:
 	pass
 	
 func take_damage(attackarea : AttackArea) -> void :
 	damage_taken.emit(attackarea)
+	Audio.play_audio_stream(damageaudio)
 	pass
 
 func make_invulnerable(dur : float = 1.0) -> void :

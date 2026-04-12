@@ -37,6 +37,15 @@ window/size/window_width_override=1440
 window/size/window_height_override=810
 window/stretch/mode="canvas_items"
 
+[file_customization]
+
+folder_colors={
+"res://player/": "blue",
+"res://script_templates/": "teal",
+"res://script_templates/DecisionEngine/": "red",
+"res://script_templates/EnemyState/": "red"
+}
+
 [global_group]
 
 Player=""

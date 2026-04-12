@@ -52,7 +52,8 @@ func physics_process(_delta: float) -> PlayerState:
 	player.velocity= Vector2( 0, groundslamvelocity) 
 	if player.is_on_floor():
 		#player.add_debugger(Color.DARK_BLUE)
-		return idle
+		if not check_collisions(_delta) :
+			return idle
 	return next_state
 
 func check_collisions( delta : float ) -> bool :

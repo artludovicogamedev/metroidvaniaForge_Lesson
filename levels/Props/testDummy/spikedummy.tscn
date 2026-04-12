@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmppb2fyhi6hj"]
+[gd_scene load_steps=13 format=3 uid="uid://bmppb2fyhi6hj"]
 
 [ext_resource type="Script" uid="uid://cbk6vc3rt4voi" path="res://levels/Props/testDummy/testdummy.gd" id="1_lp68w"]
 [ext_resource type="Script" uid="uid://8ankca1drt7g" path="res://global/VisualFX/hitparticlesettings.gd" id="2_xe0bg"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://sl712qmp8lao" path="res://general/sprites/props_destructible.png" id="5_l8d2u"]
 [ext_resource type="Script" uid="uid://dmve2th14iriw" path="res://general/scripts/hazardArea.gd" id="5_xe0bg"]
 [ext_resource type="Script" uid="uid://cmtvwnsxcioy8" path="res://general/scripts/damagearea.gd" id="6_y83lt"]
-[ext_resource type="AudioStream" uid="uid://bysfi8jt35jr3" path="res://global/Audio/audio/hit.wav" id="7_ex01a"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lp68w"]
 load_path = "res://.godot/imported/props_destructible.png-f1d05037d5d5fd1767d271e5f5cebf40.ctex"
@@ -60,7 +59,6 @@ position = Vector2(0, 6)
 collision_layer = 64
 collision_mask = 0
 script = ExtResource("6_y83lt")
-audio = ExtResource("7_ex01a")
 metadata/_custom_type_script = "uid://cmtvwnsxcioy8"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]

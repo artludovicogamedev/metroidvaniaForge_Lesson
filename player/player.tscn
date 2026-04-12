@@ -652,7 +652,6 @@ hframes = 16
 
 [node name="AttackArea" type="Area2D" parent="."]
 unique_name_in_owner = true
-visible = false
 light_mask = 0
 visibility_layer = 96
 position = Vector2(0, -28)
