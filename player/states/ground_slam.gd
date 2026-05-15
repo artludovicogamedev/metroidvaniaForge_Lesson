@@ -71,7 +71,7 @@ func check_collisions( delta : float ) -> bool :
 			if c.get_parent() is Breakable :
 				var brk : Breakable = c.get_parent()
 				brk.queue_free()
-				Audio.play_spatial_soundfx(brk.destroy_audio,pos,-3,-13)
+				Audio.play_spatial_soundfx(brk.destroy_audio,pos,-3,-13,false,true)
 				for prtcles in brk.destroy_particles :
 					Visualfx.hit_particles(pos, Vector2.DOWN , prtcles)
 				pass

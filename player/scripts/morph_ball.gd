@@ -18,7 +18,7 @@ func init() -> void:
 	
 func enter() -> void:
 	player.animation_player.play("ball")
-	Audio.play_spatial_soundfx(MORPH_SFX,player.global_position)
+	Audio.play_spatial_soundfx(MORPH_SFX,player.global_position,-3,-13,false,true)
 	player.velocity.y -= 80
 	adjust_ball_collision()
 	pass
@@ -68,7 +68,7 @@ func exit() -> void:
 	var shape :CapsuleShape2D = player.collision_stand.get_shape() as CapsuleShape2D
 	shape.radius = 8.0
 	shape.height = 46.0
-	Audio.play_spatial_soundfx(MORPH_OUT_SFX,player.global_position)
+	Audio.play_spatial_soundfx(MORPH_OUT_SFX,player.global_position,-3,-13,false,true)
 	player.collision_stand.position.y = -23
 	player.damage_area_stand.position.y = -23
 	player.animation_player.speed_scale = 1

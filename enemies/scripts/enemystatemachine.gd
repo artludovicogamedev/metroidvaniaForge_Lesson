@@ -28,14 +28,17 @@ func setup(e : Enemy , bb : Blackboard) -> void :
 func change_state(newstate : EnemyState) -> void :
 	if not newstate :
 		return
-	
+		
 	if newstate == current_state :
 		current_state.re_enter()
-	
+		return
+		
 	if current_state :
 		current_state.exit()
 	
 	states.push_front(newstate)
+	current_state.enter() ### this was missing from previous version
+	
 	if enemy :
 		enemy.decisionengine.current_state = newstate
 	states.resize(2)

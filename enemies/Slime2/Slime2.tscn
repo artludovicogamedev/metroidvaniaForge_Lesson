@@ -1,11 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://8af0x4guldgd"]
+[gd_scene load_steps=25 format=3 uid="uid://8af0x4guldgd"]
 
 [ext_resource type="Script" uid="uid://c2v0hsnmylqbn" path="res://enemies/scripts/enemy.gd" id="1_2y15g"]
 [ext_resource type="Texture2D" uid="uid://d3wclpgmqowfb" path="res://enemies/sprites/slime.png" id="2_kjhtk"]
 [ext_resource type="Script" uid="uid://dmve2th14iriw" path="res://general/scripts/hazardArea.gd" id="3_6hmam"]
 [ext_resource type="Script" uid="uid://cmtvwnsxcioy8" path="res://general/scripts/damagearea.gd" id="4_1yd3x"]
 [ext_resource type="AudioStream" uid="uid://b7vc5ymkuogiy" path="res://enemies/Slime/slime_hit.wav" id="5_mrr18"]
-[ext_resource type="Script" uid="uid://y7cytuwlqf0v" path="res://enemies/scripts/edge_detector.gd" id="6_8xb3e"]
 [ext_resource type="Script" uid="uid://bhm74akk5opwd" path="res://enemies/scripts/decision_engine/decision_engine_basic.gd" id="7_6hmam"]
 [ext_resource type="Script" uid="uid://dggmx3o0vi56k" path="res://enemies/scripts/enemystatemachine.gd" id="8_mrr18"]
 [ext_resource type="Script" uid="uid://667f8eabi1hk" path="res://enemies/scripts/states/esmove.gd" id="8_qw4qd"]
@@ -13,6 +12,9 @@
 [ext_resource type="Script" uid="uid://bn3on0buriq74" path="res://enemies/scripts/states/esdeath.gd" id="10_g3cd5"]
 [ext_resource type="AudioStream" uid="uid://dddoexpiqwh0m" path="res://enemies/Slime/slime_death.wav" id="11_ao6y5"]
 [ext_resource type="Script" uid="uid://vukvncylqt1k" path="res://enemies/scripts/sensors/edge_sensor.gd" id="12_ao6y5"]
+[ext_resource type="Script" uid="uid://4e0tbrxyjd4k" path="res://enemies/scripts/sensors/player_sensor.gd" id="13_g3cd5"]
+[ext_resource type="Script" uid="uid://yabw8611i22b" path="res://general/scripts/LootDropper.gd" id="14_n6jbc"]
+[ext_resource type="Script" uid="uid://viycio87gxmd" path="res://general/scripts/LootData.gd" id="15_7w0f5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qw4qd"]
 radius = 7.9999995
@@ -99,6 +101,12 @@ size = Vector2(24, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g3cd5"]
 size = Vector2(24, 16)
 
+[sub_resource type="Resource" id="Resource_yxkoc"]
+script = ExtResource("15_7w0f5")
+item = "uid://03qjn2mxcapg"
+maxdrop = 2
+metadata/_custom_type_script = "uid://viycio87gxmd"
+
 [node name="Slime2" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 3
@@ -122,13 +130,6 @@ libraries = {
 }
 autoplay = "move"
 
-[node name="EdgeSensor" type="RayCast2D" parent="."]
-position = Vector2(8, -1)
-target_position = Vector2(0, 8)
-collision_mask = 0
-script = ExtResource("12_ao6y5")
-metadata/_custom_type_script = "uid://y7cytuwlqf0v"
-
 [node name="HazardArea" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
@@ -150,13 +151,6 @@ metadata/_custom_type_script = "uid://cmtvwnsxcioy8"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_g3cd5")
-
-[node name="EdgeDetector" type="RayCast2D" parent="."]
-position = Vector2(8, -1)
-target_position = Vector2(0, 8)
-collision_mask = 0
-script = ExtResource("6_8xb3e")
-metadata/_custom_type_script = "uid://y7cytuwlqf0v"
 
 [node name="EnemyStateMachine" type="Node" parent="."]
 script = ExtResource("8_mrr18")
@@ -181,3 +175,23 @@ metadata/_custom_type_script = "uid://bn3on0buriq74"
 [node name="DecisionEngineBasic" type="Node" parent="."]
 script = ExtResource("7_6hmam")
 metadata/_custom_type_script = "uid://bhm74akk5opwd"
+
+[node name="EdgeSensor" type="RayCast2D" parent="."]
+position = Vector2(8, -1)
+target_position = Vector2(0, 8)
+collision_mask = 0
+script = ExtResource("12_ao6y5")
+metadata/_custom_type_script = "uid://y7cytuwlqf0v"
+
+[node name="PLayerSensor" type="Area2D" parent="."]
+position = Vector2(0, -8)
+script = ExtResource("13_g3cd5")
+metadata/_custom_type_script = "uid://4e0tbrxyjd4k"
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="PLayerSensor"]
+polygon = PackedVector2Array(0, 0, 256, -128, 256, 128)
+
+[node name="LootDropper" type="Marker2D" parent="."]
+script = ExtResource("14_n6jbc")
+items = Array[ExtResource("15_7w0f5")]([SubResource("Resource_yxkoc"), SubResource("Resource_yxkoc")])
+metadata/_custom_type_script = "uid://yabw8611i22b"

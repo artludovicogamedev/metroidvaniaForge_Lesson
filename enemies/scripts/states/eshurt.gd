@@ -12,7 +12,8 @@ func start() -> void :
 		enemy.animation.seek(0)
 	else :
 		enemy.play_animation(anim)
-	duration = enemy.animation.current_animation_length
+	duration = enemy.animation.get_animation(anim).length
+
 	timer = 0
 	calculate_velocity(blackboard.damage_source)
 	blackboard.damage_source = null
@@ -30,6 +31,7 @@ func re_enter() -> void :
 	pass
 
 func exit() -> void :
+	blackboard.damage_source = null
 	blackboard.can_decide = true
 	pass
 
@@ -43,6 +45,7 @@ func physics_update(delta: float) -> void:
 	
 func calculate_velocity(a : AttackArea) -> void :
 	velx = 1
+	print(a.global_position.x)
 	if a.global_position.x > enemy.global_position.x :
 		velx = -1
 	velx *= knockbackstrength

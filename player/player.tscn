@@ -616,6 +616,7 @@ libraries = {
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_mode = 3
+limit_smoothed = true
 script = ExtResource("9_ebec5")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

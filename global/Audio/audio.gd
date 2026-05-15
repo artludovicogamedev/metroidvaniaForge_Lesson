@@ -12,13 +12,25 @@ var current_track : int = 0
 var music_tweens : Array [Tween]
 var ui_audio_player : AudioStreamPlaybackPolyphonic
 
+var audio_pool : Array[AudioStreamPlayer2D]
+var audio_idx : int = 0
+
+signal player_made_sound(pos : Vector2 , volume : float)
+
 @onready var music_1: AudioStreamPlayer = %Music1
 @onready var music_2: AudioStreamPlayer = %Music2
 @onready var ui: AudioStreamPlayer = %UI
 
+
 func _ready() -> void:
 	ui.play()
 	ui_audio_player = ui.get_stream_playback()
+	
+	for i in 32 :
+		var audio_player : AudioStreamPlayer2D = AudioStreamPlayer2D.new()
+		add_child(audio_player)
+		audio_player.bus = "SFX"
+		audio_pool.append(audio_player)
 	pass
 
 func play_audio_stream( audio : AudioStream ) -> void :
@@ -141,18 +153,37 @@ func fade_out ( player : AudioStreamPlayer ) -> void :
 	tween.tween_callback(player.stop)
 	pass
 
-func play_spatial_soundfx(audio : AudioStream , pos : Vector2 , roomsize : float = 0.0 , vo : float = 0.0 ) ->void: 
-	var ap : AudioStreamPlayer2D = AudioStreamPlayer2D.new()
-	add_child(ap)
-	
-	var revfx : AudioEffectReverb = AudioServer.get_bus_effect(1,0)
-	AudioServer.set_bus_effect_enabled(1,0,true)
-	
-	ap.bus = "SFX"
-	revfx.room_size = roomsize #override sfx reverb
-	ap.global_position = pos
-	ap.volume_db = vo # override volume here
-	ap.stream = audio
-	ap.finished.connect(ap.queue_free)
-	ap.play()
+func play_spatial_soundfx(
+	audio : AudioStream , 
+	pos : Vector2 , 
+	roomsize : float = 0.0 , 
+	vo : float = 0.0 ,
+	ignore_pool : bool = false,
+	was_player : bool = false ) ->void: 
+		
+	if ignore_pool :
+		var ap : AudioStreamPlayer2D = AudioStreamPlayer2D.new()
+		add_child(ap)
+		var revfx : AudioEffectReverb = AudioServer.get_bus_effect(1,0)
+		AudioServer.set_bus_effect_enabled(1,0,true)
+		
+		ap.bus = "SFX"
+		revfx.room_size = roomsize #override sfx reverb
+		ap.global_position = pos
+		ap.volume_db = vo # override volume here
+		ap.stream = audio
+		ap.finished.connect(ap.queue_free)
+		ap.play()
+	else :
+		var ap : AudioStreamPlayer2D = audio_pool[audio_idx]
+		var revfx : AudioEffectReverb = AudioServer.get_bus_effect(1,0)
+		AudioServer.set_bus_effect_enabled(1,0,true)
+		revfx.room_size = roomsize #override sfx reverb
+		ap.global_position = pos
+		ap.volume_db = vo # override volume here
+		ap.stream = audio
+		ap.play()
+		audio_idx = wrapi(audio_idx + 1 , 0 , 32)
+	if was_player :
+		player_made_sound.emit(pos, vo)
 	pass

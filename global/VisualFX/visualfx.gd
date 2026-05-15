@@ -22,8 +22,8 @@ func create_land_dust_fx (pos : Vector2) -> void :
 
 func create_hit_dust_fx (pos : Vector2) -> void :	 
 	
-	var posx = pos.x + randf_range(-10.0,10.0)
-	var posy = pos.y + randf_range(-10.0,10.0)
+	var posx = pos.x
+	var posy = pos.y
 	
 	pos = Vector2(posx,posy)
 	

@@ -57,7 +57,7 @@ func on_damage_taken(attackarea : AttackArea) -> void :
 		animation_player.play("hurt")
 	else :
 		animation_player.play("death")
-		Audio.play_spatial_soundfx(death_sound,position,.5,.12)
+		Audio.play_spatial_soundfx(death_sound,position,.5,.12 )
 		damage_area.queue_free()
 		hazard_area.queue_free()
 	pass

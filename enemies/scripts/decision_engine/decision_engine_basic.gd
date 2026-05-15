@@ -15,7 +15,6 @@ func decide() -> EnemyState :
 		if blackboard.health <= 0 :
 			return es_death 
 		else:
-			print(blackboard.health)
 			return es_hurt 
 			
 	if current_state is ESDeath or not blackboard.can_decide :
@@ -26,6 +25,7 @@ func decide() -> EnemyState :
 	#		return es_attack
 	#	else :
 	#		return es_chase
+	
 	if blackboard.edge_detected :
 		enemy.change_direction(-blackboard.dir)
 		

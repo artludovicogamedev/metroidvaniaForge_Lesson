@@ -1,32 +1,8 @@
-@icon("res://general/icons/enemy.svg")
-@tool
-class_name Enemy
-extends CharacterBody2D
+class_name KnifeBandit
+extends Enemy
 
-signal direction_changed(newdir)
-signal was_hit( a : AttackArea)
-signal was_killed()
+@export var bandithp : float = 3
 
-@export var hp : float = 3
-@export var is_affected_by_gravity : bool = true
-@export var is_facing_left_on_start : bool = false :
-	set(value ) :
-		is_facing_left_on_start = value
-		_update_face_left()
-
-@export_category("Audio")
-
-
-var sprite : Sprite2D
-var animation : AnimationPlayer
-var damage_area : DamageArea
-var hazard_area : HazardArea
-@onready var attack_area : AttackArea = %AttackArea
-
-var statemachine : EnemyStateMachine
-var decisionengine : DecisionEngine
-var blackboard : Blackboard
- 
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		set_physics_process(false)
@@ -37,7 +13,7 @@ func _ready() -> void:
 func SetUp() -> void :
 	
 	blackboard = Blackboard.new()
-	blackboard.health = hp
+	blackboard.health = bandithp
 	
 	for c in get_children():
 		if c is AnimationPlayer and not animation :
@@ -78,10 +54,8 @@ func change_direction(nd : float) -> void :
 	if sprite :
 		if nd < 0 :
 			sprite.flip_h = true
-			
 		elif nd > 0:
 			sprite.flip_h = false
-		attack_area.flipattack(nd)
 	pass
 
 func play_animation(animname : String) -> void :
@@ -122,12 +96,3 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if not find_children("*" ,"DecisionEngine" , false):
 		warnings.append("Requires DecisionEngine node")
 	return warnings
-
-func _update_face_left() -> void :
-	if not Engine.is_editor_hint():
-		return
-	
-	for c in get_children():
-		if c is Sprite2D :
-			c.flip_h = is_facing_left_on_start
-	pass

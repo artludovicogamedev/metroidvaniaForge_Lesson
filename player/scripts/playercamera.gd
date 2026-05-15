@@ -7,6 +7,7 @@ var shakestr : float = 0
 
 func _ready() -> void:
 	Visualfx.camera_shake.connect(apply_shake)
+	SceneManager.new_scene_ready.connect(_on_scene_transition)
 
 func _process(delta: float) -> void:
 	offset = Vector2 ( 
@@ -18,3 +19,9 @@ func apply_shake(strength :float) -> void:
 	shakestr = min(strength , maxshakeoffset)
 	
 	pass
+
+func _on_scene_transition (_t , _o) -> void :
+	reset_smoothing.call_deferred()
+	pass
+	
+	

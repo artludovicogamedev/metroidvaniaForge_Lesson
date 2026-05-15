@@ -14,7 +14,7 @@ func enter() -> void :
 	#when enemy enters this state
 	var anim : String = animation_name if animation_name else "death"
 	enemy.play_animation(anim)
-	Audio.play_spatial_soundfx(deathsoundsfx,enemy.global_position,0.5)
+	Audio.play_spatial_soundfx(deathsoundsfx,enemy.global_position,0.5,-1.5)
 	duration = enemy.animation.current_animation_length
 	timer = 0
 	calculate_velocity(blackboard.damage_source)
@@ -28,13 +28,17 @@ func physics_update(delta: float) -> void:
 	#physics related variables here
 	timer += delta
 	enemy.velocity.x = velx * (1 - timer/duration)
+	
 	if timer >= duration :
 		blackboard.can_decide = true
 	pass
 	
 func calculate_velocity(a : AttackArea) -> void :
-	velx = 1
-	if a.global_position.x > enemy.global_position.x :
-		velx = -1
-	velx *= knockbackstrength
+	if !is_instance_valid(a):
+		return
+	
+	velx = knockbackstrength
+	
+	if a.global_position.x > enemy.global_position.x:
+		velx *= -1
 	pass
