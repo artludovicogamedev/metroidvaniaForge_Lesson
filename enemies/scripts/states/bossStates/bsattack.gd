@@ -6,7 +6,7 @@ enum ATTACKTYPE { LIGHT , HEAVY , KNOCKBACK }
 @export var cooldown : float = 3.0
 @export var reposition_distance : float = 100
 @export var attack_velocity_curve : Curve
-@export var attack_range : float = 100
+@export var attack_range : float = 150
 @export var attackdamage1 : float = 8
 @export var attackdamage2 : float = 4
 
@@ -68,10 +68,10 @@ func can_attack() -> bool :
 
 		#To optimize the variables below later.
 		if distancetotarget >= 90 :
-			set_up_attack_variables(1,3,48,120,72,-60,150,8)
+			set_up_attack_variables(1,1,48,120,72,-60,200,8)
 
 		elif distancetotarget > 40 and distancetotarget < 90 :
-			set_up_attack_variables(2,2,24,24,48,-32,50,3)
+			set_up_attack_variables(2,1,24,24,48,-32,50,3)
 			
 			
 		print("Distance to Target : ", 
