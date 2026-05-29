@@ -505,7 +505,7 @@ script = ExtResource("6_g6k8r")
 unique_name_in_owner = true
 script = ExtResource("9_tqiix")
 particles = Array[ExtResource("10_65viv")]([ExtResource("11_x7c3f")])
-invulnerableduration = 0.2
+invulnerableduration = 0.3
 
 [node name="Death" type="Node" parent="States"]
 unique_name_in_owner = true
@@ -712,7 +712,7 @@ position = Vector2(0, -27)
 [node name="HurtSFX" type="AudioStreamPlayer2D" parent="PlayerSFX"]
 unique_name_in_owner = true
 stream = ExtResource("21_x7c3f")
-volume_db = -20.913
+volume_db = -30.996
 pitch_scale = 0.84
 
 [node name="JumpSFX" type="AudioStreamPlayer2D" parent="PlayerSFX"]

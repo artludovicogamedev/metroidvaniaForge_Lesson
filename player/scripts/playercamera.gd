@@ -24,4 +24,7 @@ func _on_scene_transition (_t , _o) -> void :
 	reset_smoothing.call_deferred()
 	pass
 	
+
+func resize_area_if_boss_battle() -> void :
+	pass
 	

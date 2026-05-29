@@ -5,11 +5,14 @@ extends CharacterBody2D
 
 signal direction_changed(newdir)
 signal was_hit( a : AttackArea)
+signal damage_counter ()
 signal was_killed()
 
 @onready var attack_area: AttackArea = %AttackArea
 
+@export var enemy_name : String = "Axe Warrior"
 @export var hp : float = 3
+@export var maxhp : float = 3
 @export var is_affected_by_gravity : bool = true
 @export var is_facing_left_on_start : bool = false :
 	set(value ) :
@@ -18,12 +21,10 @@ signal was_killed()
 
 @export_category("Audio")
 
-
 var sprite : Sprite2D
 var animation : AnimationPlayer
 var damage_area : DamageArea
 var hazard_area : HazardArea
-
 
 var statemachine : EnemyStateMachine
 var decisionengine : DecisionEngine
@@ -37,10 +38,11 @@ func _ready() -> void:
 	pass
 
 func SetUp() -> void :
-	
 	blackboard = Blackboard.new()
 	blackboard.health = hp
+	blackboard.enemy_name = enemy_name
 	
+	Messages.boss_hp_changed.emit(blackboard.health , maxhp)
 	for c in get_children():
 		if c is AnimationPlayer and not animation :
 			animation = c
@@ -67,10 +69,10 @@ func SetUp() -> void :
 func _physics_process(delta: float) -> void:
 	blackboard.update_distance_to_target(global_position)
 	statemachine.change_state(decisionengine.decide())
+
 	if is_affected_by_gravity :
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * delta * blackboard.gravity_multiplier
 	statemachine.physics_update(delta)
-	
 	move_and_slide()
 	pass
 
@@ -101,6 +103,8 @@ func on_damage_taken(a : AttackArea) -> void :
 		hazard_area.queue_free()
 		was_killed.emit()
 	was_hit.emit(a)
+	damage_counter.emit()
+	Messages.boss_hp_changed.emit(blackboard.health , maxhp)
 	pass
 	
 func _get_configuration_warnings() -> PackedStringArray:

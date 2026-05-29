@@ -1,5 +1,5 @@
 @icon("res://general/icons/player_sensor.svg")
-class_name PLayerSensor
+class_name PlayerSensor
 extends Area2D
 
 signal player_entered
@@ -22,7 +22,7 @@ func _ready() -> void:
 		enemy = owner
 		set_collision_mask_value(5,true)
 		body_entered.connect(on_body_entered)
-		body_entered.connect(on_body_exited)
+		body_exited.connect(on_body_exited)
 		enemy.direction_changed.connect(on_direction_changed)
 		
 		if use_audio_sensor :

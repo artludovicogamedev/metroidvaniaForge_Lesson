@@ -242,6 +242,7 @@ walkspeed = 30.0
 metadata/_custom_type_script = "uid://667f8eabi1hk"
 
 [node name="ESIdle" type="Node" parent="EnemyStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("8_4qa60")
 metadata/_custom_type_script = "uid://bac5irf7tfago"
 
@@ -290,6 +291,7 @@ metadata/_custom_type_script = "uid://y7cytuwlqf0v"
 [node name="PLayerSensor" type="Area2D" parent="."]
 position = Vector2(0, -50)
 script = ExtResource("15_hs05m")
+search_duration = 3.0
 metadata/_custom_type_script = "uid://4e0tbrxyjd4k"
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="PLayerSensor"]

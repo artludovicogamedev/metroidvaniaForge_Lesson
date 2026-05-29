@@ -1,19 +1,24 @@
-[gd_scene load_steps=38 format=3 uid="uid://c83lby087atbn"]
+[gd_scene load_steps=47 format=3 uid="uid://c83lby087atbn"]
 
 [ext_resource type="Script" uid="uid://c2v0hsnmylqbn" path="res://enemies/scripts/enemy.gd" id="1_pcblf"]
 [ext_resource type="Texture2D" uid="uid://cm2up3d2by1es" path="res://enemies/sprites/Boss3_96x96.png" id="2_pcblf"]
+[ext_resource type="Script" uid="uid://b2t3gntuclpki" path="res://enemies/scripts/sensors/wallsensor.gd" id="3_bf73e"]
 [ext_resource type="Script" uid="uid://dmve2th14iriw" path="res://general/scripts/hazardArea.gd" id="3_qixjo"]
 [ext_resource type="Script" uid="uid://cmtvwnsxcioy8" path="res://general/scripts/damagearea.gd" id="4_g2e31"]
 [ext_resource type="AudioStream" uid="uid://bysfi8jt35jr3" path="res://global/Audio/audio/hit.wav" id="5_bf73e"]
 [ext_resource type="Script" uid="uid://dggmx3o0vi56k" path="res://enemies/scripts/enemystatemachine.gd" id="6_yx0iq"]
 [ext_resource type="Script" uid="uid://667f8eabi1hk" path="res://enemies/scripts/states/esmove.gd" id="7_koohr"]
-[ext_resource type="Script" uid="uid://bac5irf7tfago" path="res://enemies/scripts/states/esidle.gd" id="8_gmgb1"]
-[ext_resource type="Script" uid="uid://bdelitcjkami2" path="res://enemies/scripts/states/eshurt.gd" id="9_1c8on"]
+[ext_resource type="Script" uid="uid://ln0pcy205ais" path="res://enemies/scripts/states/bossStates/bshurt.gd" id="9_yx0iq"]
 [ext_resource type="Script" uid="uid://bn3on0buriq74" path="res://enemies/scripts/states/esdeath.gd" id="10_4styd"]
 [ext_resource type="AudioStream" uid="uid://dddoexpiqwh0m" path="res://enemies/Slime/slime_death.wav" id="11_v2jdw"]
 [ext_resource type="Script" uid="uid://nyae2qcmk8j7" path="res://enemies/scripts/states/bossStates/bsattack.gd" id="12_4ng0f"]
+[ext_resource type="Script" uid="uid://565brgl3q07t" path="res://enemies/scripts/states/bossStates/bsidle.gd" id="14_g2e31"]
+[ext_resource type="Script" uid="uid://ca56a1jjeibqn" path="res://enemies/scripts/states/bossStates/bsjumpchase.gd" id="14_mcgxf"]
+[ext_resource type="Script" uid="uid://q30otavcsey2" path="res://enemies/scripts/states/bossStates/bschase.gd" id="14_qixjo"]
 [ext_resource type="Script" uid="uid://vukvncylqt1k" path="res://enemies/scripts/sensors/edge_sensor.gd" id="15_qbgin"]
+[ext_resource type="Script" uid="uid://dqw6coqoqe472" path="res://enemies/scripts/states/bossStates/bspunish.gd" id="15_qixjo"]
 [ext_resource type="Script" uid="uid://4e0tbrxyjd4k" path="res://enemies/scripts/sensors/player_sensor.gd" id="16_dyfso"]
+[ext_resource type="Script" uid="uid://bf46rbm1rc8hv" path="res://enemies/scripts/states/bossStates/bscutscene.gd" id="16_g2e31"]
 [ext_resource type="Script" uid="uid://yabw8611i22b" path="res://general/scripts/LootDropper.gd" id="17_cgqcs"]
 [ext_resource type="Script" uid="uid://viycio87gxmd" path="res://general/scripts/LootData.gd" id="18_elk0s"]
 [ext_resource type="Script" uid="uid://cavcdegmiikwd" path="res://enemies/scripts/enemy hit particles.gd" id="19_mcoo8"]
@@ -22,38 +27,38 @@
 [ext_resource type="Script" uid="uid://c5yujg5qkk83s" path="res://enemies/scripts/decision_engine/decision_engine_axe_boss.gd" id="21_pcblf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gplsp"]
-radius = 8.0
+radius = 16.0
 height = 94.0
 
 [sub_resource type="Animation" id="Animation_w05vj"]
 resource_name = "Attack1"
-length = 0.88
-step = 0.08
-tracks/0/type = "value"
+length = 1.1
+step = 0.1
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("AttackArea")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.07692308, 0.15384616, 0.23076925, 0.30769232, 0.3846154, 0.4615385, 0.53846157, 0.61538464, 0.6923077, 0.7692308),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AttackArea")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.23076923),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [0.1],
 "method": &"active_area"
 }]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.90000004, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 }
 
 [sub_resource type="Animation" id="Animation_mcgxf"]
@@ -104,9 +109,26 @@ tracks/0/keys = {
 "values": [37, 38, 39, 40, 41, 42, 43, 44, 45]
 }
 
-[sub_resource type="Animation" id="Animation_bf73e"]
-resource_name = "Death"
-length = 0.8
+[sub_resource type="Animation" id="Animation_koohr"]
+resource_name = "Attack4"
+length = 1.5
+step = 0.08
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.07692308, 0.15384616, 0.23076925, 0.30769232, 0.3846154, 0.4615385, 0.53846157, 0.61538464, 0.6923077, 0.7692308, 0.84615386, 0.923077, 1, 1.0769231, 1.1538461, 1.2307693, 1.3076923, 1.3846154),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [32, 33, 34, 35, 14, 15, 16, 17, 18, 19, 20, 21, 23, 39, 40, 41, 42, 43, 44]
+}
+
+[sub_resource type="Animation" id="Animation_gmgb1"]
+resource_name = "Cinematic"
+length = 2.2
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -115,10 +137,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.90000004, 1, 1.1, 1.2, 1.3000001, 1.4, 1.5, 1.6, 1.7, 1.8000001, 1.9, 2, 2.1000001),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [51, 52, 53, 54, 55, 56, 56, 56]
+"values": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 39, 40, 41, 42, 43, 44, 45, 46]
 }
 
 [sub_resource type="Animation" id="Animation_g2e31"]
@@ -156,9 +178,9 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_pcblf"]
-resource_name = "PunishWindow"
-length = 0.6
+[sub_resource type="Animation" id="Animation_yx0iq"]
+resource_name = "Jump"
+length = 0.4
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -167,10 +189,27 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [23, 24, 25, 26, 27, 28]
+"values": [11, 12, 13, 6]
+}
+
+[sub_resource type="Animation" id="Animation_pcblf"]
+resource_name = "PunishWindow"
+length = 0.9
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [22, 23, 22, 23, 24, 25, 26, 27, 28]
 }
 
 [sub_resource type="Animation" id="Animation_ky11j"]
@@ -186,6 +225,40 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_1c8on"]
+resource_name = "Taunt"
+length = 0.7
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43, 44, 45, 46]
+}
+
+[sub_resource type="Animation" id="Animation_bf73e"]
+resource_name = "death"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [51, 52, 53, 54, 55, 56, 56, 56]
 }
 
 [sub_resource type="Animation" id="Animation_s2ljk"]
@@ -211,11 +284,15 @@ _data = {
 &"Attack1": SubResource("Animation_w05vj"),
 &"Attack2": SubResource("Animation_mcgxf"),
 &"Attack3": SubResource("Animation_qixjo"),
-&"Death": SubResource("Animation_bf73e"),
+&"Attack4": SubResource("Animation_koohr"),
+&"Cinematic": SubResource("Animation_gmgb1"),
 &"Hurt": SubResource("Animation_g2e31"),
 &"Idle": SubResource("Animation_fpxlh"),
+&"Jump": SubResource("Animation_yx0iq"),
 &"PunishWindow": SubResource("Animation_pcblf"),
 &"RESET": SubResource("Animation_ky11j"),
+&"Taunt": SubResource("Animation_1c8on"),
+&"death": SubResource("Animation_bf73e"),
 &"move": SubResource("Animation_s2ljk")
 }
 
@@ -254,20 +331,26 @@ size = Vector2(48, 120)
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_pcblf")
-hp = 50.0
+hp = 30.0
+maxhp = 30.0
 is_facing_left_on_start = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -115)
+position = Vector2(-3, -115)
 scale = Vector2(2, 2)
 texture = ExtResource("2_pcblf")
 flip_h = true
 hframes = 57
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -49)
 shape = SubResource("CapsuleShape2D_gplsp")
+
+[node name="WallRaycast" type="RayCast2D" parent="."]
+position = Vector2(0, -56)
+enabled = false
+target_position = Vector2(120, 0)
+script = ExtResource("3_bf73e")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -303,23 +386,17 @@ debug_color = Color(0.20823807, 0.25935438, 0.83264434, 0.41960785)
 script = ExtResource("6_yx0iq")
 metadata/_custom_type_script = "uid://dggmx3o0vi56k"
 
-[node name="ESIdle" type="Node" parent="EnemyStateMachine"]
-unique_name_in_owner = true
-script = ExtResource("8_gmgb1")
-metadata/_custom_type_script = "uid://bac5irf7tfago"
-
 [node name="ESMove" type="Node" parent="EnemyStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("7_koohr")
-walkspeed = 90.0
+walkspeed = 60.0
 metadata/_custom_type_script = "uid://667f8eabi1hk"
 
-[node name="ESHurt" type="Node" parent="EnemyStateMachine"]
+[node name="BSHurt" type="Node" parent="EnemyStateMachine"]
 unique_name_in_owner = true
-script = ExtResource("9_1c8on")
-knockbackstrength = 60.0
-animation_name = "Hurt"
-metadata/_custom_type_script = "uid://bdelitcjkami2"
+script = ExtResource("9_yx0iq")
+hyper_armor = 3.0
+metadata/_custom_type_script = "uid://ln0pcy205ais"
 
 [node name="ESDeath" type="Node" parent="EnemyStateMachine"]
 unique_name_in_owner = true
@@ -330,8 +407,40 @@ metadata/_custom_type_script = "uid://bn3on0buriq74"
 [node name="BSAttack" type="Node" parent="EnemyStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("12_4ng0f")
+reposition_distance = 110.0
 attack_velocity_curve = SubResource("Curve_4ng0f")
+attack_range = 100.0
+attackdamage1 = 4.0
+cooldown = 2.0
 metadata/_custom_type_script = "uid://nyae2qcmk8j7"
+
+[node name="BSJumpChase" type="Node" parent="EnemyStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("14_mcgxf")
+cooldown = 6.0
+jump_force = Vector2(320, -450)
+metadata/_custom_type_script = "uid://ca56a1jjeibqn"
+
+[node name="BSChase" type="Node" parent="EnemyStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("14_qixjo")
+chase_speed = 110
+metadata/_custom_type_script = "uid://q30otavcsey2"
+
+[node name="BSIdle" type="Node" parent="EnemyStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("14_g2e31")
+metadata/_custom_type_script = "uid://565brgl3q07t"
+
+[node name="BSPunishWindow" type="Node" parent="EnemyStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("15_qixjo")
+metadata/_custom_type_script = "uid://dqw6coqoqe472"
+
+[node name="BSCutScene" type="Node" parent="EnemyStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("16_g2e31")
+metadata/_custom_type_script = "uid://bf46rbm1rc8hv"
 
 [node name="EdgeSensor" type="RayCast2D" parent="."]
 position = Vector2(20, -4)
@@ -340,21 +449,25 @@ collision_mask = 0
 script = ExtResource("15_qbgin")
 metadata/_custom_type_script = "uid://y7cytuwlqf0v"
 
-[node name="DecisionEngineAxeBoss" type="Node" parent="." node_paths=PackedStringArray("state_attack", "state_idle")]
+[node name="DecisionEngineAxeBoss" type="Node" parent="." node_paths=PackedStringArray("state_attack", "state_jumpchase", "state_chase", "state_idle", "state_punish", "state_cinematic")]
 script = ExtResource("21_pcblf")
 state_attack = NodePath("../EnemyStateMachine/BSAttack")
-state_idle = NodePath("../EnemyStateMachine/ESIdle")
+state_jumpchase = NodePath("../EnemyStateMachine/BSJumpChase")
+state_chase = NodePath("../EnemyStateMachine/BSChase")
+state_idle = NodePath("../EnemyStateMachine/BSIdle")
+state_punish = NodePath("../EnemyStateMachine/BSPunishWindow")
+state_cinematic = NodePath("../EnemyStateMachine/BSCutScene")
 metadata/_custom_type_script = "uid://c5yujg5qkk83s"
 
 [node name="PLayerSensor" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, -50)
 script = ExtResource("16_dyfso")
+search_duration = 1.0
 metadata/_custom_type_script = "uid://4e0tbrxyjd4k"
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="PLayerSensor"]
-position = Vector2(0, -38)
-polygon = PackedVector2Array(0, 0, 72, -40, 256, -57, 256, 72, 72, 56)
+position = Vector2(0, -14)
+polygon = PackedVector2Array(0, 0, 40, -32, 152, -32, 152, 32, 40, 32)
 
 [node name="LootDropper" type="Marker2D" parent="."]
 script = ExtResource("17_cgqcs")
@@ -370,6 +483,7 @@ metadata/_custom_type_script = "uid://cavcdegmiikwd"
 
 [node name="AttackArea" type="Area2D" parent="."]
 unique_name_in_owner = true
+visible = false
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("21_k6u23")

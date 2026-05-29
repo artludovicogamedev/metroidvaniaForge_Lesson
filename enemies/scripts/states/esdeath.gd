@@ -20,8 +20,9 @@ func enter() -> void :
 	calculate_velocity(blackboard.damage_source)
 	blackboard.damage_source = null
 	blackboard.can_decide = false
+	enemy.velocity.x = 0 
 	await enemy.animation.animation_finished
-	enemy.queue_free()
+	
 	pass
 
 func physics_update(delta: float) -> void:

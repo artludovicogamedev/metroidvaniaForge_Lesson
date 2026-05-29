@@ -29,13 +29,13 @@ height = 494
 metadata/_custom_type_script = "uid://b8r2sphs8h8st"
 
 [node name="LevelTransition" parent="." instance=ExtResource("3_ndnkk")]
-position = Vector2(0, 224)
+position = Vector2(0, 230)
 size = 9
 target_level = "uid://bi3krjsipmw2b"
 
 [node name="LevelTransition2" parent="." instance=ExtResource("3_ndnkk")]
-position = Vector2(1376, 240)
-size = 6
+position = Vector2(1376, 230)
+size = 4
 location = 1
 target_level = "uid://cqqyeb4ppypxx"
 

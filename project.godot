@@ -27,6 +27,7 @@ Messages="*res://global/messages.gd"
 PlayerHud="*res://UI/PlayerHUD/PlayerHUD.tscn"
 Audio="*res://global/Audio/Audio.tscn"
 Visualfx="*res://global/VisualFX/visualfx.gd"
+BossHud="*res://UI/BossHUD/boss_hud.tscn"
 
 [display]
 

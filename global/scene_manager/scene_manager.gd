@@ -1,10 +1,13 @@
 extends CanvasLayer
 
-
+@warning_ignore_start("unused_signal")
 signal load_scene_started
 signal new_scene_ready( target_name : String , offset : Vector2)
 signal load_scene_finished
 signal scene_entered(uid :String)
+signal check_boss_cinematic()
+signal play_cinematic()
+@warning_ignore_restore("unused_signal")
 
 var current_scene_uid : String
 @onready var fade: Control = $Fade
@@ -12,6 +15,7 @@ var current_scene_uid : String
 func _ready() -> void:
 	await get_tree().process_frame
 	load_scene_finished.emit()
+	check_boss_cinematic.emit()
 	var curscene : String  = get_tree().current_scene.scene_file_path
 	current_scene_uid = ResourceUID.path_to_uid(curscene)
 	scene_entered.emit(current_scene_uid)
@@ -49,7 +53,6 @@ func transition_scene(new_scene : String , target_area_name : String , player_of
 
 func get_fade_pos(dir : String) -> Vector2 :
 	var pos : Vector2  = Vector2(480 * 2 , 270 * 2)
-	
 	match dir :
 		"left" :
 			pos *= Vector2( -1 , 0)

@@ -37,5 +37,4 @@ func _physics_process(_delta: float) -> void:
 func on_direction_change(new_dir : float)-> void :
 	if new_dir < 0 and position.x > 0 or new_dir > 0 and position.x < 0 :
 		position.x *= -1
- 
 	pass
