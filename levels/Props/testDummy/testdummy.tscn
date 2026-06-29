@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b1vm2bdrpj3xa"]
+[gd_scene load_steps=11 format=3 uid="uid://b1vm2bdrpj3xa"]
 
 [ext_resource type="Script" uid="uid://cmtvwnsxcioy8" path="res://general/scripts/damagearea.gd" id="1_gd85y"]
 [ext_resource type="Script" uid="uid://cbk6vc3rt4voi" path="res://levels/Props/testDummy/testdummy.gd" id="1_rbf1o"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://sl712qmp8lao" path="res://general/sprites/props_destructible.png" id="2_rbf1o"]
 [ext_resource type="Resource" uid="uid://dyddftd5jckww" path="res://global/VisualFX/hitparticle_settings/hit_particles_wood_medium.tres" id="4_bgs58"]
 [ext_resource type="Resource" uid="uid://cju4debmygdcu" path="res://global/VisualFX/hitparticle_settings/hit_particles_wood_small.tres" id="4_ho4rk"]
-[ext_resource type="AudioStream" uid="uid://bysfi8jt35jr3" path="res://global/Audio/audio/hit.wav" id="7_bgs58"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gd85y"]
 load_path = "res://.godot/imported/props_destructible.png-f1d05037d5d5fd1767d271e5f5cebf40.ctex"
@@ -39,7 +38,6 @@ texture = SubResource("AtlasTexture_y7f33")
 collision_layer = 64
 collision_mask = 0
 script = ExtResource("1_gd85y")
-audio = ExtResource("7_bgs58")
 metadata/_custom_type_script = "uid://cmtvwnsxcioy8"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]

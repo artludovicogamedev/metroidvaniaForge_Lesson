@@ -1,108 +1,163 @@
 class_name AttackState
 extends PlayerState
 
-const SLASH_AUDIO = preload("uid://cfelmr0dc4te3")
-
-@export var combotimewindow : float = 0.1
-@export var speed : float = 150
-
-#Dash
-@export var dashcooldownTime : float = 0.15
-var dashcooldownTimer : Timer
-var candash : bool = false
-
-var attackfinished : bool = false
+var atkCnt : int = 0 
+var attackName : String = "attack"
 var attacktimer : float = 0
-var combocounter : int = 0
-
-@onready var attack_sprite_2d: Sprite2D = %AttackSprite2D
+var attackIsInProgress : bool = false
+var attackTimerTimeOut : bool = false
+var is_air_attack : bool = false
+var combowindow : float = 0 
+var timer : float = 0
+var playerdir : float = 0 
+@export var speed : float = 100
+@export var maxAttackCnt = 5
 
 func init() -> void:
-	attack_sprite_2d.visible = false
+	player.attack_timer.timeout.connect(_on_attack_timer_timeout)
+	player.idle_timer.timeout.connect(_on_idle_timer_timeout)
 	pass
 	
 func enter() -> void:
-	player.hasdashed = false
-	candash = true
-	handle_dash_time_cooldown()
+	check_player_direction()
 	
-	player.attack_area.visible = true
-	AttackSequence()
-	player.animation_player.animation_finished.connect(on_animation_finished)
+	if player.is_on_floor():
+		MeleeAttackSettings()
+	
+	if !player.is_on_floor():
+		AirAttackSettings()
 	pass
 
 func exit() -> void:
-	attacktimer = 0
-	combocounter = 0
-	attack_sprite_2d.visible = false
-	player.animation_player.animation_finished.disconnect(on_animation_finished)
+	attackTimerTimeOut = false
+	attackIsInProgress = false
 	next_state = null
+	timer = 0
+	combowindow = 0
 	pass
 
 func handle_input( _event : InputEvent ) -> PlayerState :
-	if _event.is_action_pressed("dash") and player.player_can_dash():
-		return dash
-		
 	if _event.is_action_pressed("attack"):
-		attacktimer = combotimewindow
+		return attack
 	return next_state
 
-func process(delta: float) -> PlayerState:
-	attacktimer -= delta
-	player.velocity.x = player.direction.x * speed
+func process(_delta: float) -> PlayerState:
+	if attackTimerTimeOut :
+		attackIsInProgress = false
+		if atkCnt == 5 or is_air_attack:
+			is_air_attack = false
+			return fall
+		else :
+			return idle
 	return next_state
 
-func physics_process(_delta: float) -> PlayerState:
+func physics_process(delta: float) -> PlayerState:
+	timer += delta
+	handle_attack_settings(atkCnt)
 	return null
 
-func AttackSequence() -> void :
-	attack_sprite_2d.visible = true
-	var animname : String = "attack1"
+func MeleeAttackSettings() -> void :
+	if attackIsInProgress == false:
+		atkCnt += 1
+		player.velocity.x = 0 # pressing forward will move the player for the next attack slightly
+		attackTimerTimeOut = false
+		attackName = "attack" + str(atkCnt); 
+		handle_attack_area_collision(atkCnt)
+		player.animation_player.play(attackName)
+		player.attack_sfx.play()
+		player.idle_timer.stop()
+		determine_attack_timer()
+		pass
+	pass
 	
-	if combocounter > 0 :
-		animname = "attack2"
-	
-	if player.previous_state == crouch :
-		animname = "attack_crouch1"
-	
-	player.animation_player.play(animname)
-	player.attack_area.active_area()
-	#Audio.play_spatial_soundfx(SLASH_AUDIO , player.global_position , 0 ,5)
-	player.attack_sfx.play()
+func AirAttackSettings()-> void :
+	if attackIsInProgress == false:
+		attackTimerTimeOut = false
+		is_air_attack = true
+		handle_attack_area_collision(8)
+		player.animation_player.play("air_attack1")
+		player.idle_timer.stop()
+		player.attack_sfx.play()
+		determine_attack_timer()
+		pass
+	pass
+func _on_attack_timer_timeout() -> void : 
+	player.attack_timer.stop()
+	attackTimerTimeOut = true
+	timer = 0
 	pass
 
+func _on_idle_timer_timeout() -> void : 
+	player.idle_timer.stop()
+	atkCnt = 0
+	combowindow = 0
+	pass
+
+ 
 func on_animation_finished(_a : String) -> void :
-	end_attack()
 	pass
 
-func end_attack()-> void :
-	if attacktimer > 0 :
-		combocounter = wrapi(combocounter + 1 , 0 , 2)
-		AttackSequence()
-	else:
-		if player.is_on_floor():
-			if player.previous_state == crouch :
-				next_state = crouch 
-			else :
-				next_state = idle
-		else :
-			next_state = fall
+func determine_attack_timer() -> void : 
+	attacktimer = player.animation_player.current_animation_length
+	if atkCnt == 1 :
+		combowindow = .5
+	if atkCnt == 2 :
+		combowindow = .5
+	if atkCnt == 3 :
+		combowindow = .5
+	if atkCnt == 4 :
+		combowindow = .5
+	if atkCnt == 5 :
+		combowindow = .5
+
+	player.idle_timer.start(attacktimer + combowindow)
+	player.attack_timer.start(attacktimer)
+	pass
+func check_player_direction() -> void:
+	if player.playersprite.flip_h :
+		playerdir = -1
+	else :
+		playerdir = 1
 	pass
 
-func handle_dash_time_cooldown() -> void :
+func check_for_attck_cnt() -> bool : 
+	if( atkCnt > 5) :
+		return true
+	return false
 
-	if player.previous_state != dash :
-		return
+func handle_attack_settings( cnt : int ) -> void :
+	# control player velocity / physics here.
+	var attack_count = cnt
+	
+	#if attack_count == 4 :
+		#player.velocity.x = player.velocity.x + (playerdir * 2)
+	if attack_count == 5 :
+		if timer >= 0.2 and timer <= 0.34 :
+			player.velocity.x = player.velocity.x + (playerdir * 6)
+			player.velocity.y = -150
+			player.attack_area.compute_attack_properties(48,24,18,-20 ,2,1)
+		if timer >= 0.6 :
+			player.gravity_multiplier = 3
+	pass
+
+func handle_attack_area_collision( ac : int ) -> void :
+	var atckCnt = ac
+	
+	if atckCnt == 1 :
+		player.attack_area.compute_attack_properties(44,70,62,-35 ,1,1)
+	
+	if atckCnt == 2 :
+		player.attack_area.compute_attack_properties(54,18,50,-40 ,1,1)
+
+	if atckCnt == 3 :
+		player.attack_area.compute_attack_properties(52,58,68,-35 ,1,1)
 		
-	dashcooldownTimer = Timer.new()
-	add_child(dashcooldownTimer)
-	dashcooldownTimer.one_shot = true
-	dashcooldownTimer.wait_time = dashcooldownTime
-	dashcooldownTimer.timeout.connect(_on_dashtimer_timeout)
-	dashcooldownTimer.start()
-	candash = false 
-	pass
-
-func _on_dashtimer_timeout() -> void :
-	candash	= true
+	if atckCnt == 4 :
+		player.attack_area.compute_attack_properties(70,100,60,-50 ,1,1)
+		
+	if atckCnt == 5 :
+		player.attack_area.compute_attack_properties(24,44,28,-38 ,1,1)
+	
+	if atckCnt == 8 :#air attack
+		player.attack_area.compute_attack_properties(64,24,40,-37 ,1,1)
 	pass

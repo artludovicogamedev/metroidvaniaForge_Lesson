@@ -22,9 +22,7 @@ func enter() -> void:
 	duration = enemy.animation.current_animation_length
 	timer = 0
 	var dir := -1 if enemy.sprite.flip_h else 1
-	
 	var distance_to_player = enemy.global_position.distance_to(enemy.blackboard.target.global_position)
-	print(distance_to_player)
 	enemy.velocity.x = distance_to_player * dir
 	enemy.velocity.y = jump_force.y
 	blackboard.can_decide = false
@@ -32,7 +30,6 @@ func enter() -> void:
 	blackboard.just_jumped = true
 	blackboard.is_on_air = true
 	male_grunt_2.play()
-	#print("you entered the jump state and Punish Window is " , blackboard.punishattack) 
 	on_cooldown = true
 	pass
 	
@@ -41,7 +38,6 @@ func re_enter() -> void :
 
 func exit() -> void :
 	blackboard.can_decide = true
-
 	enemy.animation.pause()
 	set_fall_frame()
 	run_chase_cooldown()
@@ -49,15 +45,13 @@ func exit() -> void :
 
 func physics_update(_delta: float) -> void:
 	timer += _delta
-	
 	blackboard.gravity_multiplier = descending_gravity
-	
 	if timer >= duration:
 		blackboard.can_decide = true
 	pass
 
 func decide_to_jump() -> bool :
-	if blackboard.distance_to_target > 120 and not on_cooldown:
+	if blackboard.distance_to_target > 130 and not on_cooldown:
 		return true
 	return false
 

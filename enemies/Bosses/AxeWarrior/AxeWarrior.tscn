@@ -446,7 +446,7 @@ unique_name_in_owner = true
 script = ExtResource("12_4ng0f")
 reposition_distance = 110.0
 attack_velocity_curve = SubResource("Curve_4ng0f")
-attack_range = 100.0
+attack_range = 120.0
 attackdamage1 = 4.0
 knockbackforce1 = 60.0
 knockbackforce2 = 80.0
@@ -465,7 +465,7 @@ metadata/_custom_type_script = "uid://ca56a1jjeibqn"
 [node name="BSChase" type="Node" parent="EnemyStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("14_qixjo")
-chase_speed = 120
+chase_speed = 130
 metadata/_custom_type_script = "uid://q30otavcsey2"
 
 [node name="BSIdle" type="Node" parent="EnemyStateMachine"]
@@ -503,12 +503,12 @@ metadata/_custom_type_script = "uid://c5yujg5qkk83s"
 [node name="PLayerSensor" type="Area2D" parent="."]
 position = Vector2(0, -50)
 script = ExtResource("16_dyfso")
-search_duration = 1.0
+search_duration = 3.0
 metadata/_custom_type_script = "uid://4e0tbrxyjd4k"
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="PLayerSensor"]
 position = Vector2(0, -14)
-polygon = PackedVector2Array(0, 0, 40, -32, 152, -32, 152, 32, 40, 32)
+polygon = PackedVector2Array(0, 0, 40, -32, 192, -32, 192, 32, 40, 32)
 
 [node name="LootDropper" type="Marker2D" parent="."]
 script = ExtResource("17_cgqcs")

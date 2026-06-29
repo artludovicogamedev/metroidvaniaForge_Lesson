@@ -19,13 +19,11 @@ var camlimit_bottom : float
 var is_boss_area : bool = false
  
 func _ready() -> void:
- 
 	Visualfx.camera_shake.connect(apply_shake)
 	SceneManager.new_scene_ready.connect(_on_scene_transition)
 	SceneManager.boss_area_limits.connect(resize_area_if_boss_battle)
 	SceneManager.original_area_limits.connect(resize_area_after_boss_battle)
 	
- 
 func _process(delta: float) -> void:
 	offset = Vector2 ( 
 		randf_range(-shakestr , shakestr),
@@ -42,16 +40,19 @@ func _on_scene_transition (_t , _o) -> void :
 	pass
 
 func resize_area_if_boss_battle(cl:float,cr:float,ct:float,cb:float,centercam:float) -> void :
+	
 	limit_left = int(cl) 
 	limit_right = int(cr)
 	limit_top = int(ct)
 	limit_bottom = int(cb)
-	boss_cam_pos = centercam
-	await pan_camera_function()
-	await get_tree().process_frame
+	
+	var nd = boss_cam_duration
+	var bcpos = centercam
+	pan_camera_function(bcpos,nd)
 	await zoom_out_camera(zoom_value,zoom_duration)
-	await get_tree().process_frame
-
+	SceneManager.play_cinematic.emit()
+	
+	#emit the signal here to trigger na boss cinematic
 	print("Limit Left :" , limit_left," Limit Right : ", limit_right, 
 	" Limit Top : " , limit_top," Limit Bottom : " , limit_bottom , " Viewport Size : ",zoom)
 	pass
@@ -62,8 +63,12 @@ func resize_area_after_boss_battle(cl:float,cr:float,ct:float,cb:float,_centerca
 	limit_top = int(ct)
 	limit_bottom = int(cb)
 	BossHud.hide_boss_hp()
+	
+	var playerpos = get_parent().global_position.x
+	
+	await pan_camera_function(playerpos ,.5)
 	await get_tree().process_frame
-	await zoom_out_camera(Vector2(1,1) ,2)
+	await zoom_out_camera(Vector2(1,1), 1)
 	await get_tree().process_frame
 
 	print("Limit Left :" , limit_left," Limit Right : ", limit_right, 
@@ -76,10 +81,14 @@ func zoom_out_camera(zv : Vector2 ,zd : float) -> Signal :
 	var tween : Tween = create_tween()
 	print("Zoom Out Camera : " , newzv , " : " , newzd , " Original zoom value : " , zoom)
 	tween.tween_property(self ,"zoom", newzv, newzd)
+	#SceneManager.play_cinematic.emit()
 	return tween.finished
  
-func pan_camera_function() -> Signal :
+func pan_camera_function( pos :  float , dur : float) -> Signal :
+	var newpos = pos
+	var newdur = dur
 	var tween : Tween = create_tween()
 	print("Boss Area : " , boss_cam_pos)
-	tween.tween_property(self ,"global_position:x", boss_cam_pos,boss_cam_duration)
+	
+	tween.tween_property(self ,"global_position:x", newpos,newdur)
 	return tween.finished

@@ -11,7 +11,7 @@ class_name PlayerStateFall
 var landingtimer : float = 0
 var coyoteTimer : float = 0
 var bufferTimer : float = 0
-
+var collisionpoint := Vector2.ZERO
 
 var dashcooldownTimer : Timer
 var candash : bool = false
@@ -19,19 +19,24 @@ var candash : bool = false
 var playerHasDoubleJumped : bool = false
 var origvolume : float = 0
 
+const LANDDOWNSFX = preload("uid://crjm0tnon3w0a")
 func init() -> void:
 	pass
 	
 func enter() -> void:
 	#dash related variables
+	player.collision_stand.set_deferred("disabled", false)
+	#player.collision_ledge_hang.disabled = true
 	player.gravity_multiplier = 1.0
 	handle_dash_time_cooldown()
-	
-	player.animation_player.play("jump")
+	player.animation_player.play("fall")
 	player.animation_player.pause()
 	landingtimer = beforelandingTime
-	origvolume = player.land_sfx.volume_db
+	#origvolume = player.land_sfx.volume_db
+	is_below_oneway_platform()
 	can_wall_jump()
+
+	
 	player.gravity_multiplier = fall_gravity_multiplier #increases gravity fall velocity during fall
 	if player.previous_state == jump || player.previous_state == attack || player.previous_state == dash:
 		coyoteTimer = 0
@@ -41,7 +46,7 @@ func enter() -> void:
 
 func exit() -> void:
 	bufferTimer = 0
-	player.land_sfx.volume_db = origvolume
+	#player.land_sfx.volume_db = origvolume
 	player.gravity_multiplier = 1.0 # reset gravity to default
 	pass
 
@@ -63,7 +68,7 @@ func handle_input( event : InputEvent ) -> PlayerState :
 		
 		if can_wall_jump():
 			return jump
-			
+		
 		elif playerHasDoubleJumped == false and player.double_jump : 
 			playerHasDoubleJumped = true
 			return jump
@@ -76,26 +81,30 @@ func process(delta: float) -> PlayerState:
 	coyoteTimer -= delta
 	bufferTimer -= delta
 	landingtimer -= delta
+	
 	set_fall_frame()
 	return next_state
 
 func physics_process(_delta: float) -> PlayerState:
-	if player.is_on_floor():
+	if (check_for_ledge() and !is_below_oneway_platform() and is_above_ground()):
+		player.velocity.y = 0
+		return ledge_hang
 		
+	if player.is_on_floor():
 		playerHasDoubleJumped = false
 		candash = true
 		Visualfx.create_land_dust_fx(player.global_position)
 		#player.add_debugger(Color.DARK_BLUE)
-		#Audio.play_spatial_soundfx(LANDDOWNSFX ,player.global_position , -3 , -11)
+		#Audio.play_spatial_soundfx(LANDDOWNSFX ,player.global_position , -3 , -15)
 		player.land_sfx.play()
 		
 		if landingtimer < 0 :
 			player.land_sfx.volume_db += 5
 		if bufferTimer > 0 :
 			return jump
-		player.land_sfx.volume_db = 0
+		#player.land_sfx.volume_db = 0
 		return idle
-	
+
 	if can_wall_jump():
 		player.velocity.x = player.direction.x * kickfromwall
 	else:
@@ -114,11 +123,9 @@ func can_wall_jump() -> bool :
 	if (player.walljumpleftraycast.is_colliding() or 
 		player.walljumprightraycast.is_colliding()):
 		return true 
-	
 	return false
 
 func handle_dash_time_cooldown() -> void :
-
 	if player.previous_state != dash :
 		return
 		
@@ -133,3 +140,26 @@ func handle_dash_time_cooldown() -> void :
 
 func _on_dashtimer_timeout() -> void :
 	pass
+
+func is_below_oneway_platform() -> bool : 
+	player.platformabove.force_raycast_update()
+	if player.platformabove.is_colliding() :
+		return true
+	return false
+
+func is_above_ground() -> bool : 
+	player.platformbelow.force_raycast_update()
+	if !player.platformbelow.is_colliding() :
+		return true
+	return false
+
+func check_for_ledge() -> bool : 
+	player.ledgegrabtop.enabled = true
+	player.ledgegrabbottom.enabled = true
+	
+	if !player.ledgegrabtop.is_colliding() and player.ledgegrabbottom.is_colliding() :
+		collisionpoint = player.ledgegrabbottom.get_collision_point()
+		return true
+	return false
+
+ 

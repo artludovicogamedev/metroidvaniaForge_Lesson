@@ -19,6 +19,9 @@ var next_state : PlayerState
 @onready var death: DeathState = %Death
 @onready var ground_slam: GroundSlam = %GroundSlam
 @onready var morph_ball: MorphBall = %MorphBall
+@onready var ledge_hang: PlayerStateLedgeHang = %LedgeHang
+@onready var ledge_climb: PlayerStateLedgeClimb = %LedgeClimb
+
 
 #endregion
 

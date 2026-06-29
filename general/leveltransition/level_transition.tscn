@@ -7,6 +7,7 @@ size = Vector2(32, 32)
 
 [node name="LevelTransition" type="Node2D"]
 script = ExtResource("1_jaeth")
+waittime = null
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
@@ -17,3 +18,8 @@ monitorable = false
 position = Vector2(16, -16)
 shape = SubResource("RectangleShape2D_e5coi")
 debug_color = Color(0.078039594, 0.69687116, 0.17729275, 0.41960785)
+
+[node name="GateTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="timeout" from="GateTimer" to="." method="_on_gate_timer_timeout"]

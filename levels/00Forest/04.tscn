@@ -7,9 +7,9 @@
 [ext_resource type="Shader" uid="uid://ck8h1tehfmtr4" path="res://materials_and_shaders/fog_fade_shader.tres" id="5_e3pwa"]
 [ext_resource type="PackedScene" uid="uid://dvecj7dv31xn8" path="res://levels/Props/plants.tscn" id="6_ib3in"]
 [ext_resource type="PackedScene" uid="uid://4hpsx3nexej8" path="res://general/leveltransition/level_transition.tscn" id="6_isurk"]
-[ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://player/player.tscn" id="7_m4jse"]
 [ext_resource type="Texture2D" uid="uid://ddmwkimq3olh" path="res://myCharacter/MMakiling_Idle.png" id="8_e3pwa"]
 [ext_resource type="Script" uid="uid://bwpc3haaurpfo" path="res://global/Audio/music/musictrigger.gd" id="10_0sg3m"]
+[ext_resource type="PackedScene" uid="uid://byy8ghkrl3til" path="res://general/player_spawn/player_spawn.tscn" id="11_0sg3m"]
 [ext_resource type="AudioStream" uid="uid://ctydtsnogiogi" path="res://global/Audio/music/Town.ogg" id="11_isurk"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t2qlm"]
@@ -400,9 +400,6 @@ location = 1
 target_level = "uid://bxeftv3hdojwp"
 target_area_name = "LevelTransition3"
 
-[node name="Player" parent="." instance=ExtResource("7_m4jse")]
-position = Vector2(496, 160)
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(184, 80.999985)
 scale = Vector2(1.4, 1.4)
@@ -416,3 +413,6 @@ track = ExtResource("11_isurk")
 reverb = 1
 volumeoverride = 3.0
 metadata/_custom_type_script = "uid://bwpc3haaurpfo"
+
+[node name="PlayerSpawn" parent="MusicTrigger" instance=ExtResource("11_0sg3m")]
+position = Vector2(984, 272)

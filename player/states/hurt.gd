@@ -35,12 +35,9 @@ func handle_input( _event : InputEvent ) -> PlayerState :
 
 func process(_delta: float) -> PlayerState:
 	hurttime -= _delta
-
-		
 	if hurttime <= 0 :
 		if player.player_hp <= 0 :
 			return death
-			
 		if !player.is_on_floor():
 			return fall
 		else:

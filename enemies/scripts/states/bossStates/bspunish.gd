@@ -15,7 +15,7 @@ func enter() -> void :
 	timer = 0
 	blackboard.can_decide = false
 	blackboard.damage_source = null
-	
+	#playsound here
 	if !enemy.damage_counter.is_connected(_on_enemy_punished):
 		enemy.damage_counter.connect(_on_enemy_punished)
 	pass

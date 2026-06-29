@@ -41,7 +41,11 @@ func on_new_cinematic_ready( ) -> void :
 
 func _on_player_entered( _n : Node2D) -> void :
 	SceneManager.boss_area_entered.emit()
-	SceneManager.play_cinematic.emit()
+	
+	if _n is Player :
+		_n.can_move = false
+		_n.change_state(_n.current_state.idle)
+		
 	area_2d.body_entered.disconnect( _on_player_entered )
 	pass
 

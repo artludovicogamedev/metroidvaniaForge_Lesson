@@ -60,6 +60,7 @@ func on_height_change(nh : int) -> void :
 	pass
 
 func _on_boss_defeated() -> void :
-	new_camera_centerpos = global_position.x
-	SceneManager.original_area_limits.emit(camlimit_left,camlimit_right,camlimit_top,camlimit_bottom,new_camera_centerpos)
+	#new_camera_centerpos = global_position.x
+	var playerpos = get_parent().global_position.x
+	SceneManager.original_area_limits.emit(camlimit_left,camlimit_right,camlimit_top,camlimit_bottom,playerpos)
 	pass

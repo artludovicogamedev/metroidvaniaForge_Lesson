@@ -40,6 +40,8 @@ func _ready() -> void:
 	camlimit_right = int(global_position.x) + boss_width
 	camlimit_top = int(global_position.y)
 	camlimit_bottom = int(global_position.y) + boss_height
+	
+	
 	SceneManager.boss_area_entered.connect(_on_boss_area_entered)
 	SceneManager.boss_defeated.connect(_on_boss_defeated)
 	

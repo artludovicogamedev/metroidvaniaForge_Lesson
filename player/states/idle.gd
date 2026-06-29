@@ -1,18 +1,22 @@
-extends PlayerState
 class_name PlayerStateIdle
+extends PlayerState
 
 @export var dashcooldownTime : float = 0.15
 var dashcooldownTimer : Timer
 var candash : bool = false
 
 func init() -> void:
+
 	pass
 	
 func enter() -> void:
+	player.collision_ledge.set_deferred("disabled", true)
+	#player.collision_ledge_hang.set_deferred("disabled" , true)
 	#dash related variables
 	player.hasdashed = false
 	candash = true
 	player.gravity_multiplier = 1.0
+	reset_raycasts()
 	handle_dash_time_cooldown()
 	
 	player.animation_player.play("idle")
@@ -67,3 +71,7 @@ func handle_dash_time_cooldown() -> void :
 func _on_dashtimer_timeout() -> void :
 	candash	= true
 	pass
+
+func reset_raycasts() -> void :
+	player.ledgegrabtop.enabled = false
+	player.ledgegrabbottom.enabled = false

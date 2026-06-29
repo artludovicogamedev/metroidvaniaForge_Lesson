@@ -21,10 +21,8 @@ func create_land_dust_fx (pos : Vector2) -> void :
 	jd.start_effect(DustEffect.TYPE.land)
 
 func create_hit_dust_fx (pos : Vector2) -> void :	 
-	
 	var posx = pos.x
 	var posy = pos.y
-	
 	pos = Vector2(posx,posy)
 	
 	var jd : DustEffect = _create_dust_effect(pos)

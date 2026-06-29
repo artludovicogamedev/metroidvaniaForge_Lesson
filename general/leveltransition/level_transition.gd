@@ -5,7 +5,8 @@ extends Node2D
 
 enum SIDE { LEFT , RIGHT , TOP , BOTTOM }
 enum LEVEL_TYPE { DUNGEON, FOREST }
-
+@onready var gate_timer: Timer = %GateTimer
+@export var waittime : float = .25 # disable entry /exit point for a while
 @export_range( 2 , 16 , 1.0 ,"or_greater") var size : int = 2 :
 	set(value) :
 		size = value
@@ -28,6 +29,7 @@ func _ready() -> void:
 	apply_area_settings()
 	SceneManager.new_scene_ready.connect(on_new_scene_ready)
 	SceneManager.load_scene_finished.connect(on_load_scene_finished)
+	
 	#area_2d.body_entered.connect(_on_player_entered)
 	pass
 
@@ -53,6 +55,7 @@ func apply_area_settings() -> void :
 func _on_player_entered( n : Node2D) -> void :
 	#get_tree().change_scene_to_file(target_level)
 	#n is currently the player node
+	
 	SceneManager.transition_scene(target_level, target_area_name , 
 		get_offset(n), get_transition_direction())
 	pass
@@ -73,9 +76,9 @@ func on_new_scene_ready( target_name : String , offset : Vector2 ) -> void :
 func on_load_scene_finished() -> void :
 	area_2d.monitoring = false
 	area_2d.body_entered.connect( _on_player_entered )
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	area_2d.monitoring = true
+	gate_timer.wait_time = waittime
+	gate_timer.one_shot = true
+	gate_timer.start()
 	pass
 
 func get_offset( player : Node2D)-> Vector2:
@@ -113,3 +116,8 @@ func get_transition_direction() -> String :
 		_:
 			return "down"
 		
+
+
+func _on_gate_timer_timeout() -> void:
+	area_2d.monitoring = true
+	pass # Replace with function body.

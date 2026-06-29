@@ -58,9 +58,8 @@ func process(_delta: float) -> PlayerState:
 func physics_process(_delta: float) -> PlayerState:
 	player.velocity.x = player.direction.x * player.movespeed
 	
-	if (player.playersprite.frame == 14 
-	or player.playersprite.frame == 17
-	or player.playersprite.frame == 13):
+	if (player.playersprite.frame == 27 
+	or player.playersprite.frame == 31):
 		randomize_footstep_sfx()
 	else :
 		foot_step_played = false
@@ -72,7 +71,7 @@ func physics_process(_delta: float) -> PlayerState:
 func randomize_footstep_sfx() -> void :
 	if !foot_step_played :
 		var fs = FOOTSTEPS.pick_random()
-		#Audio.play_spatial_soundfx(fs ,player.global_position , -3 , -6)
+		Audio.play_spatial_soundfx(fs ,player.global_position , -3,-4 )
 		player.footstep_sfx.stream = fs
 		player.footstep_sfx.play()
 		foot_step_played = true

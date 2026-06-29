@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://cqqyeb4ppypxx"]
+[gd_scene load_steps=5 format=4 uid="uid://cqqyeb4ppypxx"]
 
 [ext_resource type="TileSet" uid="uid://3jgekgndmfkp" path="res://levels/TileSets/forest.tres" id="1_y1avb"]
 [ext_resource type="Script" uid="uid://b8r2sphs8h8st" path="res://general/scripts/level_bounds.gd" id="2_cf7dq"]
 [ext_resource type="PackedScene" uid="uid://4hpsx3nexej8" path="res://general/leveltransition/level_transition.tscn" id="3_4du0i"]
+[ext_resource type="PackedScene" uid="uid://byy8ghkrl3til" path="res://general/player_spawn/player_spawn.tscn" id="4_b8jl8"]
 
 [node name="00" type="Node2D"]
 
@@ -33,3 +34,6 @@ position = Vector2(288, 384)
 size = 5
 location = 3
 target_level = "uid://8juvx47je5kc"
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("4_b8jl8")]
+position = Vector2(24, 228)

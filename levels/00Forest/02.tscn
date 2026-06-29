@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://bjylrea0pky47" path="res://levels/TileSets/Sprites/light_stream.jpg" id="3_7js0h"]
 [ext_resource type="PackedScene" uid="uid://4hpsx3nexej8" path="res://general/leveltransition/level_transition.tscn" id="3_wv3f0"]
 [ext_resource type="Material" uid="uid://bbr2nmqdf8ygu" path="res://materials_and_shaders/fog_fade_material.tres" id="4_bad3b"]
-[ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://player/player.tscn" id="5_p53cw"]
 [ext_resource type="Script" uid="uid://bwpc3haaurpfo" path="res://global/Audio/music/musictrigger.gd" id="7_ejvff"]
 [ext_resource type="AudioStream" uid="uid://ctydtsnogiogi" path="res://global/Audio/music/Town.ogg" id="8_30e7u"]
 [ext_resource type="PackedScene" uid="uid://bmppb2fyhi6hj" path="res://levels/Props/testDummy/spikedummy.tscn" id="9_30e7u"]
+[ext_resource type="PackedScene" uid="uid://byy8ghkrl3til" path="res://general/player_spawn/player_spawn.tscn" id="9_l8efv"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bad3b"]
 blend_mode = 1
@@ -315,9 +315,6 @@ position = Vector2(456, 239.99998)
 scale = Vector2(4.0312495, 5.53125)
 texture = SubResource("GradientTexture2D_wv3f0")
 
-[node name="Player" parent="Parallax" instance=ExtResource("5_p53cw")]
-position = Vector2(144, 616)
-
 [node name="LevelTilemaps" type="Node2D" parent="."]
 position = Vector2(0, 448)
 
@@ -380,3 +377,6 @@ metadata/_custom_type_script = "uid://bwpc3haaurpfo"
 
 [node name="Spikedummy" parent="MusicTrigger" instance=ExtResource("9_30e7u")]
 position = Vector2(704, 997)
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("9_l8efv")]
+position = Vector2(40, 1126)

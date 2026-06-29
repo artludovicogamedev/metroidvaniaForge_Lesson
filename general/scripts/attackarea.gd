@@ -45,14 +45,13 @@ func flipattack( dirx : float) -> void:
 	pass
 
 func compute_attack_properties(ax : float ,ay :float ,apx : float , apy : float, 
-	dmg : float = 0 , kbf : float = 0) -> void :
+	dmg : float = 0 , kbf : float = 0 ) -> void :
 	# this function will resize hitboxes
 	collision_shape_2d.shape.size = Vector2(ax,ay)
 	collision_shape_2d.position = Vector2(apx,apy)
 	attack_damage = dmg
 	knockback_damage = kbf
 	pass
-
 
 func reset_attack_properties(ax : float ,ay :float ,apx : float , apy : float) -> void :
 	# this function will resize hitboxes

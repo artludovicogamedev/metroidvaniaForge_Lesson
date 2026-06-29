@@ -25,6 +25,9 @@ func exit() -> void :
 
 func physics_update(_delta: float) -> void:
 	timer += _delta
+	
+	#in this idle method , if enemy detects wall collision or is idle for more than 1 second
+	#switch state to taunt/move
 	if timer >= duration:
 		blackboard.can_decide = true
 	pass

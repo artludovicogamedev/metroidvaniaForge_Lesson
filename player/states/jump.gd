@@ -15,7 +15,7 @@ func enter() -> void:
 	#dash related variables
 	player.gravity_multiplier = 1.0
 	handle_dash_time_cooldown()
-	
+	is_below_oneway_platform()
 	Visualfx.create_jump_dust_fx(player.global_position)
 	player.jump_sfx.play()
 	player.animation_player.play("jump")
@@ -74,7 +74,6 @@ func set_jump_frame() -> void:
 
 
 func handle_dash_time_cooldown() -> void :
-
 	if player.previous_state != dash :
 		return
 		
@@ -90,3 +89,9 @@ func handle_dash_time_cooldown() -> void :
 func _on_dashtimer_timeout() -> void :
 	candash	= true
 	pass
+
+func is_below_oneway_platform() -> bool : 
+	player.platformabove.force_raycast_update()
+	if player.platformabove.is_colliding() :
+		return true
+	return false

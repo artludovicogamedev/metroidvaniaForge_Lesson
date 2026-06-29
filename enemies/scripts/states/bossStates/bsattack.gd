@@ -10,7 +10,6 @@ enum ATTACKTYPE { LIGHT , HEAVY , KNOCKBACK }
 @export var reposition_distance : float = 100
 @export var attack_velocity_curve : Curve
 @export var attack_range : float = 150
-
 @export var attackdamage1 : float = 3
 @export var attackdamage2 : float = 2
 @export var knockbackforce1 : float = 200
@@ -46,7 +45,7 @@ func enter() -> void :
 		axe_attack_pattern()
 
 	if can_use_kick_attack :
-		kick_attack_patter()
+		kick_attack_pattern()
 		
 	prepare_attack_parameters()
 	duration = enemy.animation.current_animation_length
@@ -109,6 +108,7 @@ func physics_update(_delta: float) -> void:
 	#return false
 	#
 func can_attack() -> bool :
+	#attack cooldown will vary
 	if blackboard.distance_to_target <= attack_range and not on_cooldown:
 		distancetotarget = blackboard.distance_to_target
 		if distancetotarget > 80 :
@@ -130,6 +130,10 @@ func set_up_attack_variables( ac : int ,
 	hbszx : float , hbszy : float , 
 	hbposx : float , hbposy : float, 
 	sp : float , dmg : float ) -> void :
+		
+	#this function handles attack variables including damage, resizing the hurtboxes
+	#position of the hurtboxes 
+	
 	attackcnt = ac    # attack count 
 	hurtbox_size_x = hbszx # shape size X 
 	hurtbox_size_y = hbszy # shape size Y 
@@ -139,14 +143,13 @@ func set_up_attack_variables( ac : int ,
 	finaldamage = dmg # damage
 	pass
 
-func kick_attack_patter() -> void :
+func kick_attack_pattern() -> void :
 	set_up_attack_variables(2,24,24,48,-32,50,attackdamage2)
 	var anim : String = animation_name if animation_name else "Attack2"
 	enemy.play_animation(anim)
 	male_grunt_3.play()
 	can_use_kick_attack = false
 
-	
 func axe_attack_pattern () -> void :
 	set_up_attack_variables(1,48,120,72,-60,200,attackdamage1)
 	var anim : String = animation_name if animation_name else "Attack1"

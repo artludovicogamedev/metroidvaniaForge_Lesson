@@ -14,16 +14,18 @@ func enter() -> void:
 		
 		
 	player.collision_stand.disabled = true
+	player.collision_ledge.disabled = true
 	player.collision_crouch.disabled = false
 
 	player.drop_down_shape_cast.force_shapecast_update()
-	#player.player_sprite.scale.y = 0.625
-	#player.player_sprite.position.y = -15
+	#player.playersprite.scale.y = 0.625
+	#player.playersprite.position.y = -15
 	pass
 
 func exit() -> void:
 	player.collision_stand.set_deferred("disabled", false)
 	player.collision_crouch.set_deferred("disabled", true)
+	player.collision_ledge.set_deferred("disabled", true)
 	player.damage_area_stand.set_deferred("disabled", false)
 	player.damage_area_crouch.set_deferred("disabled", true)
 	
@@ -56,7 +58,6 @@ func process(_delta: float) -> PlayerState:
 
 func physics_process(delta: float) -> PlayerState:
 	player.velocity.x -= player.velocity.x * slowDownSpeed * delta
-	
 	if player.is_on_floor() == false :
 		return fall
 		
