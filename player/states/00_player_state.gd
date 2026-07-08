@@ -21,6 +21,12 @@ var next_state : PlayerState
 #@onready var morph_ball: MorphBall = %MorphBall
 @onready var ledge_hang: PlayerStateLedgeHang = %LedgeHang
 @onready var ledge_climb: PlayerStateLedgeClimb = %LedgeClimb
+@onready var dodge_roll: PlayerStateDodgeRoll = %DodgeRoll
+@onready var block: PlayerBlockState = %Block
+@onready var parry: PlayerParryState = %Parry
+@onready var block_break: PlayerBlockBreak = %BlockBreak
+@onready var blocked: PlayerBlockedState = %Blocked
+
 
 
 #endregion

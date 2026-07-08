@@ -28,7 +28,7 @@ func enter() -> void :
 	timer = 0
 	blackboard.can_decide = false
 	on_cooldown = true
-	enemy.velocity.x = walkspeed * blackboard.dir
+	enemy.velocity.x = 0
 	pass
 
 func re_enter() -> void :
@@ -53,8 +53,6 @@ func physics_update(_delta: float) -> void:
 
 func can_attack() -> bool :
 	if blackboard.distance_to_target <= attack_range and not on_cooldown:
-		print("Distance to Target : ", 
-			blackboard.distance_to_target , " : Attack Range : " , attack_range , " : " ,on_cooldown)
 		return true
 	return false
 

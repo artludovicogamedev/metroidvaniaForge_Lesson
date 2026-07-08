@@ -243,8 +243,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_1c8on"]
 resource_name = "Taunt"
-length = 0.5
-step = 0.05
+length = 0.7
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -252,10 +252,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [44, 53, 54, 55, 56, 57, 58, 59]
+"values": [40, 41, 42, 43, 44, 45, 46]
 }
 
 [sub_resource type="Animation" id="Animation_bf73e"]
@@ -329,9 +329,6 @@ _data = {
 &"move": SubResource("Animation_s2ljk")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ofsg"]
-size = Vector2(32, 54)
-
 [sub_resource type="Curve" id="Curve_4ng0f"]
 _data = [Vector2(0.08243728, 0.019230723), 0.0, 0.0, 0, 0, Vector2(0.082447276, 1), -0.68989, -0.68989, 0, 0, Vector2(0.46594983, 0), -9.389425, 0.0, 0, 0]
 point_count = 3
@@ -361,6 +358,9 @@ count = 20
 color = Color(0.92768556, 0.1893006, 0.1893006, 1)
 metadata/_custom_type_script = "uid://8ankca1drt7g"
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ofsg"]
+size = Vector2(32, 54)
+
 [node name="AxeWarrior" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 3
@@ -389,21 +389,6 @@ script = ExtResource("3_bf73e")
 libraries = {
 &"": SubResource("AnimationLibrary_gnu42")
 }
-
-[node name="AttackArea" type="Area2D" parent="."]
-unique_name_in_owner = true
-collision_layer = 0
-collision_mask = 16
-script = ExtResource("21_k6u23")
-attack_damage = 10.0
-knockback_damage = 15.0
-metadata/_custom_type_script = "uid://crxnp7t2mcd67"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-unique_name_in_owner = true
-position = Vector2(-64, -48)
-shape = SubResource("RectangleShape2D_7ofsg")
-debug_color = Color(0.70196074, 0, 0.005449592, 0.41960785)
 
 [node name="HazardArea" type="Area2D" parent="."]
 visible = false
@@ -519,7 +504,7 @@ metadata/_custom_type_script = "uid://c5yujg5qkk83s"
 visible = false
 position = Vector2(0, -50)
 script = ExtResource("16_dyfso")
-search_duration = 3.0
+search_duration = 1.5
 metadata/_custom_type_script = "uid://4e0tbrxyjd4k"
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="PLayerSensor"]
@@ -537,6 +522,19 @@ script = ExtResource("19_mcoo8")
 hit_particles = Array[ExtResource("20_tdavc")]([SubResource("Resource_w05vj")])
 death_particles = Array[ExtResource("20_tdavc")]([SubResource("Resource_fpxlh"), SubResource("Resource_j2cyj")])
 metadata/_custom_type_script = "uid://cavcdegmiikwd"
+
+[node name="AttackArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("21_k6u23")
+attack_damage = 10.0
+metadata/_custom_type_script = "uid://crxnp7t2mcd67"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(-64, -48)
+shape = SubResource("RectangleShape2D_7ofsg")
+debug_color = Color(0.70196074, 0, 0.005449592, 0.41960785)
 
 [node name="SFX" type="Node2D" parent="."]
 

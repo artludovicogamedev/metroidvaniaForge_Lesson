@@ -36,7 +36,6 @@ var on_cooldown : bool = false
 
 
 func enter() -> void :
-	print("Enemy Distance to Target : ", distancetotarget)
 	if blackboard.just_jumped :
 		jump_attack_pattern()
 		blackboard.just_jumped = false
@@ -144,21 +143,21 @@ func set_up_attack_variables( ac : int ,
 	pass
 
 func kick_attack_pattern() -> void :
-	set_up_attack_variables(2,24,24,48,-32,50,attackdamage2)
+	set_up_attack_variables(2,32,54,64,-48,50,attackdamage2)
 	var anim : String = animation_name if animation_name else "Attack2"
 	enemy.play_animation(anim)
 	male_grunt_3.play()
 	can_use_kick_attack = false
 
 func axe_attack_pattern () -> void :
-	set_up_attack_variables(1,48,120,72,-60,200,attackdamage1)
+	set_up_attack_variables(1,67,120,95,-62,200,attackdamage1)
 	var anim : String = animation_name if animation_name else "Attack1"
 	enemy.play_animation(anim)
 	grunt_attack_1.play()
 	can_use_axe_attack = false
 	
 func jump_attack_pattern() -> void :
-	set_up_attack_variables(1,48,120,72,-60,200,attackdamage1)
+	set_up_attack_variables(1,67,120,95,-62,200,attackdamage1)
 	var anim : String = animation_name if animation_name else "Attack1"
 	slash_sfx.play()
 	enemy.play_animation(anim)

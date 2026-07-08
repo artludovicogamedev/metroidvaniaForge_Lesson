@@ -17,11 +17,13 @@ var gravity_multiplier : float = 1.0
 var punishattack : bool = false
 var just_attacked : bool = false
 var just_jumped : bool = false
+var just_stepped_back : bool = false
 var can_retaliate : bool = false 
-var is_on_air : bool = false
 var theme_song : AudioStreamPlayer = null
 var cinematic_state_played : bool = false
 var enemy_name : String = ""
+
+var step_back_counter : int = 0
 
 func update_distance_to_target(pos : Vector2) -> void :
 	if target :

@@ -28,7 +28,12 @@ func exit() -> void:
 func handle_input( _event : InputEvent ) -> PlayerState :
 	#if (_event.is_action_pressed("dash") and player.player_can_dash() and candash):
 		#return dash
-		
+	if _event.is_action_pressed("dash"):
+		return dodge_roll
+
+	if _event.is_action_pressed("block") and player.player_bp > 2.0:
+		return block
+
 	if _event.is_action_pressed("attack"):
 		return attack
 		

@@ -53,8 +53,8 @@ func resize_area_if_boss_battle(cl:float,cr:float,ct:float,cb:float,centercam:fl
 	SceneManager.play_cinematic.emit()
 	
 	#emit the signal here to trigger na boss cinematic
-	print("Limit Left :" , limit_left," Limit Right : ", limit_right, 
-	" Limit Top : " , limit_top," Limit Bottom : " , limit_bottom , " Viewport Size : ",zoom)
+	#print("Limit Left :" , limit_left," Limit Right : ", limit_right, 
+	#" Limit Top : " , limit_top," Limit Bottom : " , limit_bottom , " Viewport Size : ",zoom)
 	pass
 
 func resize_area_after_boss_battle(cl:float,cr:float,ct:float,cb:float,_centercam:float) -> void :
@@ -70,16 +70,16 @@ func resize_area_after_boss_battle(cl:float,cr:float,ct:float,cb:float,_centerca
 	await get_tree().process_frame
 	await zoom_out_camera(Vector2(1,1), 1)
 	await get_tree().process_frame
-
-	print("Limit Left :" , limit_left," Limit Right : ", limit_right, 
-	" Limit Top : " , limit_top," Limit Bottom : " , limit_bottom , " Viewport Size : ",zoom)
+#
+	#print("Limit Left :" , limit_left," Limit Right : ", limit_right, 
+	#" Limit Top : " , limit_top," Limit Bottom : " , limit_bottom , " Viewport Size : ",zoom)
 	pass
 	
 func zoom_out_camera(zv : Vector2 ,zd : float) -> Signal :
 	var newzv = zv
 	var newzd = zd
 	var tween : Tween = create_tween()
-	print("Zoom Out Camera : " , newzv , " : " , newzd , " Original zoom value : " , zoom)
+	#print("Zoom Out Camera : " , newzv , " : " , newzd , " Original zoom value : " , zoom)
 	tween.tween_property(self ,"zoom", newzv, newzd)
 	#SceneManager.play_cinematic.emit()
 	return tween.finished
@@ -88,7 +88,7 @@ func pan_camera_function( pos :  float , dur : float) -> Signal :
 	var newpos = pos
 	var newdur = dur
 	var tween : Tween = create_tween()
-	print("Boss Area : " , boss_cam_pos)
+	#print("Boss Area : " , boss_cam_pos)
 	
 	tween.tween_property(self ,"global_position:x", newpos,newdur)
 	return tween.finished

@@ -36,6 +36,9 @@ func exit() -> void:
 	pass
 
 func handle_input( _event : InputEvent ) -> PlayerState :
+	if _event.is_action_pressed("dash"):
+		return dodge_roll
+		
 	if _event.is_action_pressed("attack"):
 		return attack
 		

@@ -24,7 +24,6 @@ func enter() -> void:
 	Visualfx.camera_shake_fx(3)
 	#timer
 	#audio 
-	
 	pass
 
 func exit() -> void:
@@ -51,7 +50,7 @@ func physics_process(_delta: float) -> PlayerState:
 	return null
 
 func _on_damage_taken(attackarea : AttackArea) -> void :
-	if player.current_state == death :
+	if player.current_state == death or player.current_state == block:
 		return
 
 	player.change_state(self)

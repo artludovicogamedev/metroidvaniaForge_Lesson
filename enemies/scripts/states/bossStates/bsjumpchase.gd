@@ -23,12 +23,11 @@ func enter() -> void:
 	timer = 0
 	var dir := -1 if enemy.sprite.flip_h else 1
 	var distance_to_player = enemy.global_position.distance_to(enemy.blackboard.target.global_position)
-	enemy.velocity.x = distance_to_player * dir
+	enemy.velocity.x = ( distance_to_player - 100 ) * dir
 	enemy.velocity.y = jump_force.y
 	blackboard.can_decide = false
 	blackboard.punishattack = true
 	blackboard.just_jumped = true
-	blackboard.is_on_air = true
 	male_grunt_2.play()
 	on_cooldown = true
 	pass

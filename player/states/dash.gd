@@ -29,7 +29,6 @@ func enter() -> void:
 	player.velocity.y  = 0
 	player.gravity_multiplier = 0
 	player.playersprite.create_tween_fx(dashDuration)
-	
 	pass
 	
 func process(delta: float) -> PlayerState:

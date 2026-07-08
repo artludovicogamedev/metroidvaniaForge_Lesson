@@ -13,6 +13,7 @@ extends DecisionEngine
 @onready var es_move: ESMove = %ESMove
 @onready var es_death: BSDeath = %BSDeath
 @onready var bs_hurt: BSHurt = %BSHurt
+@onready var bs_step_back: BSStepBack = %BSStepBack
 
 var previous_state : EnemyState
 var cinematic_triggered : bool = false
@@ -30,7 +31,7 @@ func decide() -> EnemyState :
 	if blackboard.cinematic_state_played:
 		return state_cinematic
 	
-	if blackboard.damage_source:
+	if blackboard.damage_source and !blackboard.punishattack:
 		if blackboard.health <= 0 :
 			return es_death 
 		else:
@@ -46,7 +47,12 @@ func decide() -> EnemyState :
 	# transition from state attack to punish regardless 
 	if blackboard.punishattack and blackboard.just_attacked:
 		return state_punish
-	
+
+	if blackboard.just_stepped_back : 
+		blackboard.just_stepped_back = false
+		print("choose_after_step_back Function ")
+		return choose_after_step_back()
+		
 	if blackboard.target:
 		if state_jumpchase.decide_to_jump():
 			return state_jumpchase
@@ -54,37 +60,47 @@ func decide() -> EnemyState :
 		if state_attack.can_attack():
 			return state_attack
 	
-		if blackboard.distance_to_target <= 40 :
-			#for now do this, else make boss move bac
-			return state_idle
-			
+		if blackboard.distance_to_target <= 50:
+			return choose_close_range_move()
+	
 		return state_chase
-		#if blackboard.distance_to_target < 300 :
-			#return state_idle
-		
-		#return state_idle
-	#			if attacktype is normal ( downward axe swing )
-	#				return to idle state for a while 
-	#               knockback player 
-	#			if attacktype is kick 
-	#				knockback player further away
-	#			if attacktype is heavy ( stronger axe swing with danger indication )
-	#				if hit - knockback player 
-	#				if missed - transition to recovery state.
-	#               	in recovery state there is punish window 
-	#               	if player is still within target range after punish window ends
-	#						transition to attack (upward swing)
-	#							if hit - launch player upwards 
-	#					if player is outside target area, return to idle
-			
-	#	else :
-	#		return es_chase
+ 
 	if blackboard.edge_detected :
 		enemy.change_direction(-blackboard.dir)
 
 	return es_move
+	
 func _trigger_cinematic() -> void :
 	blackboard.cinematic_state_played = true
 	cinematic_triggered = true
 	SceneManager.play_cinematic.disconnect(_trigger_cinematic)
 	pass
+
+func choose_after_step_back() -> EnemyState:
+	var roll = randi_range(0,99)
+
+	if roll < 10 and blackboard.step_back_counter == 0:
+		blackboard.step_back_counter += 1
+		return bs_step_back
+		
+	if roll < 40:
+		return state_attack
+		
+	if roll < 70:
+		return state_chase
+		
+	blackboard.step_back_counter = 0
+	enemy.velocity.x = 0
+	return state_idle
+
+func choose_close_range_move() -> EnemyState :
+	var roll := randi_range(0, 99)
+	
+	if roll < 70 and bs_step_back.can_jump_back():
+		return bs_step_back
+
+	if roll < 30 and state_attack.can_attack():
+		return state_attack
+		
+	enemy.velocity.x = 0
+	return state_idle

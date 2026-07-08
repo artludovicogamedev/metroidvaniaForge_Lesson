@@ -102,15 +102,15 @@ func snap_player_to_ledge()-> void :
 	player.world_center.global_position = world_center
 	player.hang_corner.global_position = hang_corner
 	
-	print()
-	print("origin:", player.ledgegrabbottom.global_position)
-	print("target:", player.ledgegrabbottom.to_global(player.ledgegrabbottom.target_position))
-	print("ledgegrabbottom target pos :" ,player.ledgegrabbottom.target_position)
-	print("ledgegrabbottom global pos :" ,player.ledgegrabbottom.global_position)
-	print(" Collision Point Raycast : " ,cp, " to Local : ", local_cp)
-	print(" Tile Coordinates from local_cp to " , tc)
-	print(" Tile Coordinates to Local : " , local_center)
-	print(" World Center : " , local_center)
-	print(" Player sprite flip : ", player.playersprite.flip_h)
-	print(" Player Position : " , player.global_position , " | Hang Corner : " , hang_corner , " | hang offset : " , player.get_hang_offset() )
+	#print()
+	#print("origin:", player.ledgegrabbottom.global_position)
+	#print("target:", player.ledgegrabbottom.to_global(player.ledgegrabbottom.target_position))
+	#print("ledgegrabbottom target pos :" ,player.ledgegrabbottom.target_position)
+	#print("ledgegrabbottom global pos :" ,player.ledgegrabbottom.global_position)
+	#print(" Collision Point Raycast : " ,cp, " to Local : ", local_cp)
+	#print(" Tile Coordinates from local_cp to " , tc)
+	#print(" Tile Coordinates to Local : " , local_center)
+	#print(" World Center : " , local_center)
+	#print(" Player sprite flip : ", player.playersprite.flip_h)
+	#print(" Player Position : " , player.global_position , " | Hang Corner : " , hang_corner , " | hang offset : " , player.get_hang_offset() )
 	pass

@@ -3,6 +3,8 @@ extends CanvasLayer
 @onready var hp_bar: TextureProgressBar = %HPBar
 @onready var mp_margin: MarginContainer = %MPMargin
 @onready var mp_bar: TextureProgressBar = %MPBar
+@onready var block_margin: MarginContainer = %BlockMargin
+@onready var block_bar: TextureProgressBar = %BlockBar
 
 #game over controls
 @onready var game_over: Control = %GameOver
@@ -15,12 +17,13 @@ extends CanvasLayer
 func _ready() -> void:
 	Messages.player_hp_changed.connect(update_player_healthbar)
 	Messages.player_mp_changed.connect(update_player_magic_bar)
+	Messages.player_bp_changed.connect(update_player_block_bar)
 	
 	load_game.pressed.connect(_on_load_button_pressed)
 	quit_button.pressed.connect(_on_quit_button_pressed)
 	game_over.visible = false
 	pass
-	
+
 func update_player_healthbar( curhp : float  , maxhp : float ) -> void :
 	var val = ( curhp  / maxhp) * 100 
 	hp_bar.value = val
@@ -31,6 +34,11 @@ func update_player_magic_bar( curmp : float  , maxmp : float ) -> void :
 	var val = ( curmp  / maxmp) * 100 
 	mp_bar.value = val
 	mp_margin.size.x = maxmp + 22
+	pass
+	
+func update_player_block_bar( curbp : float  , maxbp : float ) -> void :
+	var val = ( curbp  / maxbp) * 100 
+	block_bar.value = val
 	pass
 
 func _on_load_button_pressed() -> void : 

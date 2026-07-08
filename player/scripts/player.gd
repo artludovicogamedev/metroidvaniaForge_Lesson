@@ -35,13 +35,15 @@ signal damage_taken()
 @onready var point_light_2d: PointLight2D = %PointLight2D
 #@onready var cur_hp: Label = $Debugger/curHp
 
+@onready var attack_area: AttackArea = %AttackArea
+@onready var damage_area: DamageArea = %DamageArea
+@onready var parry_area: ParryArea = %ParryArea
 
 @onready var damage_area_stand: CollisionShape2D = %DamageAreaStand
 @onready var damage_area_crouch: CollisionShape2D = %DamageAreaCrouch 
+@onready var blocking_area: CollisionShape2D = %BlockingArea
+@onready var parry_area_collider: CollisionShape2D = %ParryAreaCollider
 
-@onready var attack_area: AttackArea = %AttackArea
-
-@onready var damage_area: DamageArea = %DamageArea
 #@onready var ground_slam_attack_area: AttackArea = %GroundSlamAttackArea
 #@onready var test_alert_label: Label = %Label2 #not needed
 
@@ -53,6 +55,10 @@ signal damage_taken()
 @onready var attack_sfx: AudioStreamPlayer2D = %AttackSFX
 @onready var footstep_sfx: AudioStreamPlayer2D = %FootstepSFX
 @onready var dash_sfx: AudioStreamPlayer2D = %DashSFX
+@onready var dodge_roll_sfx: AudioStreamPlayer2D = %DodgeRollSFX
+@onready var parry_impact_sfx: AudioStreamPlayer2D = %ParryImpactSFX
+@onready var blocked_sfx: AudioStreamPlayer2D = %BlockedSFX
+@onready var block_break_sfx: AudioStreamPlayer2D = %BlockBreakSFX
 
 #endregion
 
@@ -78,6 +84,20 @@ signal damage_taken()
 		player_max_mp = value
 		Messages.player_mp_changed.emit(player_mp, player_max_mp)
 
+#block hit points
+@export var player_bp : float = 10 :
+	set( value ) :
+		player_bp = clampf(value, 0 , player_max_bp)
+		Messages.player_bp_changed.emit(player_bp, player_max_bp)
+
+@export var player_max_bp : float = 10 :
+	set( value ) :
+		player_max_bp = value
+		Messages.player_bp_changed.emit(player_bp, player_max_bp)
+
+@export var player_hp_regen_rate : float = 1.0
+@export var player_mp_regen_rate : float = 1.0
+@export var player_block_regen_rate : float = 1.0
 @export var double_jump : bool = false
 @export var dash_skill : bool = false
 @export var ground_slam : bool = false #not used
@@ -116,6 +136,7 @@ var knockback_force : float = 0
 var can_move : bool = true
 var alert_player : bool = false
 var ledge_direction : Vector2 = Vector2.ZERO
+var successful_parry : bool = false
 #endregion
 
 
@@ -142,6 +163,7 @@ func _ready() -> void:
 	SceneManager.play_cinematic.connect(on_cinematic_mode)
 	SceneManager.cinematic_sequence_finished.connect(on_cinematic_finished)
 	damage_area.damage_taken.connect(on_damage_taken)
+	damage_area.block_damage_taken.connect(on_block_damage_taken)
 	point_light_2d.enabled = false
 	
 	initialize_states()
@@ -150,6 +172,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not can_move :
 		return
+	recover_block_hp(_delta)
 	update_raycast_facing()
 	update_direction()
 	change_state( current_state.process(_delta))
@@ -224,8 +247,6 @@ func change_state(new_state : PlayerState) -> void:
 	pass
 
 func update_direction() -> void :
-
-		
 	var prev_direction : Vector2 = direction
 	#this code is intended only for game designs that doesnt use the thumb stick
 	#direction = Input.get_vector("left","right","up","down")
@@ -291,11 +312,19 @@ func on_player_healed( amount : float )->void :
 	pass
 
 func on_damage_taken(attackarea: AttackArea) -> void :
-	if current_state == current_state.death :
+	if current_state == current_state.death or current_state == current_state.block:
 		return
+		
 	player_hp -= attackarea.attack_damage
 	knockback_force = attackarea.knockback_damage
 	damage_taken.emit()
+	pass
+
+func on_block_damage_taken(attackarea: AttackArea) -> void :
+	if current_state == current_state.death or current_state != current_state.block:
+		return
+	player_bp -= attackarea.attack_damage
+	knockback_force = attackarea.knockback_damage
 	pass
 
 func on_input_hint_changed(inputhint : String) -> void :
@@ -322,4 +351,11 @@ func on_cinematic_finished() -> void :
 	can_move = true
 	#test_alert_label.visible = false
 	alert_player = false
-	
+
+func recover_block_hp (d) -> void :
+	var deltatime = d
+	if player_bp >= player_max_bp:
+		player_bp = player_max_bp
+
+	player_bp = player_bp + ( player_max_bp * player_block_regen_rate ) * deltatime 
+	pass

@@ -6,6 +6,7 @@ signal player_healed(amount : float)
 signal input_hint_changed(hint : String)
 signal player_hp_changed( hp : float , maxhp : float)
 signal player_mp_changed( mp : float , maxmp : float)
+signal player_bp_changed(bp : float , maxbp : float) # block damage
 signal boss_hp_loaded(hp : float , maxhp : float)
 signal boss_hp_changed( hp : float , maxhp : float)
 signal back_to_title()
