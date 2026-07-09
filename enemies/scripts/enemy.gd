@@ -135,3 +135,6 @@ func _update_face_left() -> void :
 		if c is Sprite2D :
 			c.flip_h = is_facing_left_on_start
 	pass
+
+func on_parried(parry_area: ParryArea):
+	blackboard.parry_source = parry_area

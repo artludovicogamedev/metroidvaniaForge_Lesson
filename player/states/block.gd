@@ -49,7 +49,6 @@ func process(_delta: float) -> PlayerState:
 func physics_process(_delta: float) -> PlayerState:
 	parry_window_timer += _delta 
 	block_timer += _delta
-	print("Parry Window : " ,parry_window_timer)
 	if is_parried :
 		return parry
 	
@@ -66,7 +65,7 @@ func physics_process(_delta: float) -> PlayerState:
 func handle_blocking_properties() -> void :
 	player.damage_area_stand.disabled = true
 	player.damage_area_crouch.disabled = true
-	player.parry_area_collider.disabled = false
+	player.parry_area_collider.disabled = true
 	player.blocking_area.disabled = false
 	parry_window_timer = 0
 	is_parried = false
@@ -84,7 +83,6 @@ func _on_block_damage_taken(_attackarea : AttackArea) -> void :
 	if a.name == "HazardArea" :
 		#prevents block to trigger when pressed and player is beside a hazard area
 		return
-
 	if parry_window_timer <= parry_window and block_timer < parry_window:
 		is_parried = true
 	
@@ -92,6 +90,5 @@ func _on_block_damage_taken(_attackarea : AttackArea) -> void :
 		attack_received = true
 	
 	if player.player_bp <= 0 :
-		
 		is_block_broken = true
 	pass

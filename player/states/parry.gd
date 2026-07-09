@@ -11,9 +11,8 @@ func init() -> void:
 	
 func enter() -> void:
 	player.blocking_area.disabled = true
-	player.parry_area_collider.disabled = true
+	player.parry_area_collider.disabled = false
 	player.successful_parry = true
-	print("Player Parried : " , player.successful_parry)
 	player.animation_player.play("parry")
 	player.parry_impact_sfx.play()
 	duration = player.animation_player.current_animation_length

@@ -12,6 +12,7 @@ var edge_detected : bool = false
 var wall_detected : bool = false
 var wall_distance : float = 0
 var damage_source : AttackArea = null
+var parry_source : ParryArea = null
 var dir : float = 1.0
 var gravity_multiplier : float = 1.0
 var punishattack : bool = false

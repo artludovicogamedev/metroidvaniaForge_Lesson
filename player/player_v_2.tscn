@@ -587,6 +587,8 @@ size = Vector2(20, 40)
 collision_layer = 16
 collision_mask = 67
 script = ExtResource("1_jjj87")
+player_hp = 50.0
+player_max_hp = 50.0
 player_block_regen_rate = 0.2
 
 [node name="States" type="Node" parent="."]
@@ -652,7 +654,7 @@ if guard HP <= 0
 return block break state
 "
 script = ExtResource("13_hapbf")
-parry_window = 0.1
+parry_window = 0.15
 
 [node name="Parry" type="Node" parent="States"]
 unique_name_in_owner = true

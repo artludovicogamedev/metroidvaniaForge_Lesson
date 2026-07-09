@@ -19,7 +19,8 @@ extends DecisionEngine
 @onready var es_move: ESMove = %ESMove
 @onready var es_hurt: ESHurt = %ESHurt
 @onready var es_death: ESDeath = %ESDeath
- 
+@onready var es_parried: ESParried = %ESParried
+
 #@onready var es_attack 
 
 
@@ -29,6 +30,8 @@ func _ready() -> void:
 
 func decide() -> EnemyState :
 	#example 
+	if blackboard.parry_source :
+		return es_parried
 	
 	if blackboard.damage_source :
 		if blackboard.health <= 0 :

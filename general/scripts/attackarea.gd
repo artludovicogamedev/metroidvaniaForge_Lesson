@@ -4,6 +4,7 @@ extends Area2D
 
 @export var attack_damage : float = 0.0
 @export var knockback_damage : float = 0 
+@export var attack_source_node : Node2D
 #create an attack enum here, heavy ,piercing , slash, magic
 @onready var collision_shape_2d: CollisionShape2D = %CollisionShape2D
 
@@ -23,11 +24,12 @@ func on_body_entered(body : Node2D) -> void:
 		pos.x = body.global_position.x
 		Visualfx.create_hit_dust_fx(pos)
 		pass
-	if body is ParryArea :
-		var my_parent = get_parent()
-		#body.parry_attack()
-		var parry_parent = body.get_parent()
-		print("Attack by " , my_parent , " is parried by ", parry_parent, "!!!")
+		
+	elif body is ParryArea :
+		if attack_source_node and attack_source_node.has_method("on_parried"):
+			attack_source_node.on_parried(body)
+			pass
+		pass
 	pass
 
  
