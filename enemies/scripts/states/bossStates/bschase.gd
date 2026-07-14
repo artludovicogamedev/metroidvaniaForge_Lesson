@@ -2,9 +2,11 @@ class_name BSChase
 extends EnemyState
 
 @export var chase_speed = 80
-
+@export var chase_timer : float = 0 
+var chase_time = 0 
 
 func enter() -> void :
+	chase_time = 0
 	#when enemy enters this state
 	reset_attack_paramaters()
 	enemy.play_animation(animation_name if animation_name else "move")
@@ -23,11 +25,6 @@ func physics_update(_delta: float) -> void:
 	var dir : float = sign(blackboard.target.global_position.x - enemy.global_position.x)
 	enemy.change_direction(dir)
 	enemy.velocity.x = chase_speed * dir
-	
-	if enemy.is_on_wall():
-		enemy.change_direction(-blackboard.dir)
-		
-	#check if there is ledge
 	pass
 
 func reset_attack_paramaters() -> void :

@@ -38,9 +38,6 @@ func _physics_process(_delta: float) -> void:
 			distance_from_wall = global_position.distance_to(hit_point)
 			first_wall_contact = false
 			
-		print("Distance from Wall : " ,distance_from_wall)
-		print("Wall detected : " , collision_detected )
-		
 		if collision_detected :
 			enemy.blackboard.wall_detected = true
 			enemy.blackboard.wall_distance = distance_from_wall

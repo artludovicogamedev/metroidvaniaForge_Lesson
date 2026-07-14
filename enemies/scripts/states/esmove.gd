@@ -22,9 +22,9 @@ func physics_update(_delta: float) -> void:
 	if enemy.is_on_wall():
 		enemy.change_direction(-blackboard.dir)
 	
-	
 	enemy.velocity.x = walkspeed * blackboard.dir
 	pass
+
 
 func reset_attack_paramaters() -> void :
 	blackboard.punishattack = false

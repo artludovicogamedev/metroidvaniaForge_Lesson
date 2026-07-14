@@ -1,7 +1,7 @@
 class_name BSAttack
 extends EnemyState
 
-enum ATTACKTYPE { LIGHT , HEAVY , KNOCKBACK }
+enum ATTACKTYPE { LIGHT , HEAVY , KNOCKBACK } # to use next time
 
 @onready var slash_sfx: AudioStreamPlayer = %SlashSfx
 @onready var grunt_attack_1: AudioStreamPlayer = %GruntAttack1
@@ -34,9 +34,9 @@ var duration : float = 0
 var timer : float = 0
 var on_cooldown : bool = false 
 
-
 func enter() -> void :
-	if blackboard.just_jumped :
+	duration = 0
+	if blackboard.just_jumped:
 		jump_attack_pattern()
 		blackboard.just_jumped = false
 		
@@ -49,8 +49,8 @@ func enter() -> void :
 	prepare_attack_parameters()
 	duration = enemy.animation.current_animation_length
 	enemy.velocity.x = reposition_distance * blackboard.dir
+	timer = 0	
 	on_cooldown = true
-	timer = 0
 	blackboard.can_decide = false
 
 	
@@ -70,6 +70,7 @@ func re_enter() -> void :
 func exit() -> void :
 	blackboard.can_decide = true
 	blackboard.just_jumped = false
+	on_cooldown = true
 	blackboard.gravity_multiplier = 1.0
 	run_attack_cooldown()
 	pass
@@ -150,17 +151,18 @@ func kick_attack_pattern() -> void :
 	can_use_kick_attack = false
 
 func axe_attack_pattern () -> void :
-	set_up_attack_variables(1,67,120,95,-62,200,attackdamage1)
+	set_up_attack_variables(1,81,166,89,-85,200,attackdamage1)
 	var anim : String = animation_name if animation_name else "Attack1"
 	enemy.play_animation(anim)
 	grunt_attack_1.play()
 	can_use_axe_attack = false
 	
 func jump_attack_pattern() -> void :
-	set_up_attack_variables(1,67,120,95,-62,200,attackdamage1)
+	set_up_attack_variables(1,81,166,89,-85,200,attackdamage1)
 	var anim : String = animation_name if animation_name else "Attack1"
 	slash_sfx.play()
 	enemy.play_animation(anim)
+	can_use_axe_attack = false
 
 func prepare_attack_parameters() -> void :
 	var kbf : float = 0 

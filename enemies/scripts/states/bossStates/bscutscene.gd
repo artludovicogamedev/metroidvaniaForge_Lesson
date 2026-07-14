@@ -10,7 +10,7 @@ func enter() -> void :
 	var anim : String = animation_name if animation_name else "Cinematic"
 	enemy.play_animation(anim)
 	male_grunt_2.play()
-	blackboard.theme_song.play()
+	#blackboard.theme_song.play()
 	duration = enemy.animation.current_animation_length
 	enemy.velocity.x = 0 
 	timer = 0
