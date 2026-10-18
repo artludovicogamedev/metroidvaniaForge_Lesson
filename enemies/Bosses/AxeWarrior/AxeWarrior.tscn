@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://c83lby087atbn"]
+[gd_scene load_steps=54 format=3 uid="uid://c83lby087atbn"]
 
 [ext_resource type="Script" uid="uid://b6h4lydgf7x05" path="res://enemies/Bosses/AxeWarrior/axe_warrior.gd" id="1_bf73e"]
 [ext_resource type="Texture2D" uid="uid://b6xmjbq8kbuw1" path="res://enemies/sprites/boss_110x110_for_export.png" id="2_hmasg"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://ln0pcy205ais" path="res://enemies/scripts/states/bossStates/bshurt.gd" id="9_yx0iq"]
 [ext_resource type="Script" uid="uid://cintl0xqhcgyt" path="res://enemies/scripts/states/bossStates/bsdeath.gd" id="10_g2e31"]
 [ext_resource type="AudioStream" uid="uid://bgnl4u0ik1uam" path="res://global/Audio/audio/death.wav" id="11_bf73e"]
-[ext_resource type="Script" uid="uid://nyae2qcmk8j7" path="res://enemies/scripts/states/bossStates/bsattack.gd" id="12_4ng0f"]
 [ext_resource type="Script" uid="uid://565brgl3q07t" path="res://enemies/scripts/states/bossStates/bsidle.gd" id="14_g2e31"]
 [ext_resource type="Script" uid="uid://ca56a1jjeibqn" path="res://enemies/scripts/states/bossStates/bsjumpchase.gd" id="14_mcgxf"]
 [ext_resource type="Script" uid="uid://q30otavcsey2" path="res://enemies/scripts/states/bossStates/bschase.gd" id="14_qixjo"]
@@ -20,12 +19,12 @@
 [ext_resource type="Script" uid="uid://4e0tbrxyjd4k" path="res://enemies/scripts/sensors/player_sensor.gd" id="16_dyfso"]
 [ext_resource type="Script" uid="uid://bf46rbm1rc8hv" path="res://enemies/scripts/states/bossStates/bscutscene.gd" id="16_g2e31"]
 [ext_resource type="Script" uid="uid://yabw8611i22b" path="res://general/scripts/LootDropper.gd" id="17_cgqcs"]
-[ext_resource type="Script" uid="uid://viycio87gxmd" path="res://general/scripts/LootData.gd" id="18_elk0s"]
 [ext_resource type="Script" uid="uid://ido07eoniav7" path="res://enemies/Bosses/AxeWarrior/bs_step_back.gd" id="18_hmasg"]
 [ext_resource type="Script" uid="uid://cavcdegmiikwd" path="res://enemies/scripts/enemy hit particles.gd" id="19_mcoo8"]
+[ext_resource type="Script" uid="uid://d2turxqjt78rx" path="res://enemies/Bosses/AxeWarrior/BSAW_axeatk.gd" id="20_hmasg"]
 [ext_resource type="Script" uid="uid://8ankca1drt7g" path="res://global/VisualFX/hitparticlesettings.gd" id="20_tdavc"]
 [ext_resource type="Script" uid="uid://crxnp7t2mcd67" path="res://general/scripts/attackarea.gd" id="21_k6u23"]
-[ext_resource type="Script" uid="uid://c5yujg5qkk83s" path="res://enemies/scripts/decision_engine/decision_engine_axe_boss.gd" id="21_pcblf"]
+[ext_resource type="Script" uid="uid://d35inygea7pi2" path="res://enemies/Bosses/AxeWarrior/decision_engine_axe_warrior_v2.gd" id="22_hmasg"]
 [ext_resource type="AudioStream" uid="uid://bwpspxrb18co3" path="res://global/Audio/audio/male_grunt_2.ogg" id="26_koohr"]
 [ext_resource type="AudioStream" uid="uid://bibfixkmvfgqp" path="res://global/Audio/audio/male_grunt1_fast.ogg" id="26_yx0iq"]
 [ext_resource type="AudioStream" uid="uid://dm7bqwdx45bqw" path="res://global/Audio/audio/grunt_attack1.ogg" id="27_1c8on"]
@@ -36,36 +35,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gplsp"]
 radius = 16.0
 height = 94.0
-
-[sub_resource type="Animation" id="Animation_w05vj"]
-resource_name = "Attack1"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [20, 21, 22, 23, 24, 25, 26, 27, 28, 28]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AttackArea")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.1],
-"method": &"active_area"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_mcgxf"]
 resource_name = "Attack2"
@@ -137,6 +106,36 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+}
+
+[sub_resource type="Animation" id="Animation_w05vj"]
+resource_name = "AxeAttack1"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23, 24, 25, 26, 27, 28, 28]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackArea")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.1],
+"method": &"active_area"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_gmgb1"]
@@ -311,11 +310,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gnu42"]
 _data = {
-&"Attack1": SubResource("Animation_w05vj"),
 &"Attack2": SubResource("Animation_mcgxf"),
 &"Attack3": SubResource("Animation_qixjo"),
 &"Attack4": SubResource("Animation_koohr"),
 &"Attack5": SubResource("Animation_4styd"),
+&"AxeAttack1": SubResource("Animation_w05vj"),
 &"Cinematic": SubResource("Animation_gmgb1"),
 &"Hurt": SubResource("Animation_g2e31"),
 &"Idle": SubResource("Animation_fpxlh"),
@@ -331,16 +330,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ofsg"]
 size = Vector2(81, 166)
 
-[sub_resource type="Curve" id="Curve_4ng0f"]
-_data = [Vector2(0.08243728, 0.019230723), 0.0, 0.0, 0, 0, Vector2(0.082447276, 1), -0.68989, -0.68989, 0, 0, Vector2(0.46594983, 0), -9.389425, 0.0, 0, 0]
-point_count = 3
-metadata/_snap_enabled = true
-
-[sub_resource type="Resource" id="Resource_yxkoc"]
-script = ExtResource("18_elk0s")
-item = "uid://03qjn2mxcapg"
-maxdrop = 2
-metadata/_custom_type_script = "uid://viycio87gxmd"
+[sub_resource type="Curve" id="Curve_hmasg"]
+_data = [Vector2(0.20408162, 0.022471905), 0.0, 0.0, 0, 0, Vector2(0.26530612, 1), 2.359551, 2.359551, 0, 0, Vector2(0.48979592, 1), -2.2491038, -2.2491038, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="Resource" id="Resource_w05vj"]
 script = ExtResource("20_tdavc")
@@ -436,6 +428,7 @@ metadata/_custom_type_script = "uid://dggmx3o0vi56k"
 unique_name_in_owner = true
 script = ExtResource("7_koohr")
 walkspeed = 90.0
+animation_name = "move"
 metadata/_custom_type_script = "uid://667f8eabi1hk"
 
 [node name="BSHurt" type="Node" parent="EnemyStateMachine"]
@@ -448,19 +441,6 @@ unique_name_in_owner = true
 script = ExtResource("10_g2e31")
 deathsoundsfx = ExtResource("11_bf73e")
 metadata/_custom_type_script = "uid://cintl0xqhcgyt"
-
-[node name="BSAttack" type="Node" parent="EnemyStateMachine"]
-unique_name_in_owner = true
-script = ExtResource("12_4ng0f")
-reposition_distance = 110.0
-attack_velocity_curve = SubResource("Curve_4ng0f")
-attack_range = 120.0
-attackdamage1 = 4.0
-knockbackforce1 = 60.0
-knockbackforce2 = 80.0
-cooldown = 3.0
-fall_gravity_multiplier = 3.0
-metadata/_custom_type_script = "uid://nyae2qcmk8j7"
 
 [node name="BSJumpChase" type="Node" parent="EnemyStateMachine"]
 unique_name_in_owner = true
@@ -495,6 +475,24 @@ unique_name_in_owner = true
 script = ExtResource("18_hmasg")
 jumpbackcooldown = 8.0
 
+[node name="BSAWAxeAttack" type="Node" parent="EnemyStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("20_hmasg")
+attack_range = 120.0
+attack_velocity_curve = SubResource("Curve_hmasg")
+animation_name = "AxeAttack1"
+metadata/_custom_type_script = "uid://d2turxqjt78rx"
+
+[node name="DecisionEngineAxeBossV2" type="Node" parent="." node_paths=PackedStringArray("state_axe_attack", "state_jumpchase", "state_chase", "state_idle", "state_punish", "state_cinematic")]
+script = ExtResource("22_hmasg")
+state_axe_attack = NodePath("../EnemyStateMachine/BSAWAxeAttack")
+state_jumpchase = NodePath("../EnemyStateMachine/BSJumpChase")
+state_chase = NodePath("../EnemyStateMachine/BSChase")
+state_idle = NodePath("../EnemyStateMachine/BSIdle")
+state_punish = NodePath("../EnemyStateMachine/BSPunishWindow")
+state_cinematic = NodePath("../EnemyStateMachine/BSCutScene")
+metadata/_custom_type_script = "uid://d35inygea7pi2"
+
 [node name="EdgeSensor" type="RayCast2D" parent="."]
 position = Vector2(20, -4)
 target_position = Vector2(0, 15)
@@ -502,21 +500,11 @@ collision_mask = 0
 script = ExtResource("15_qbgin")
 metadata/_custom_type_script = "uid://y7cytuwlqf0v"
 
-[node name="DecisionEngineAxeBoss" type="Node" parent="." node_paths=PackedStringArray("state_attack", "state_jumpchase", "state_chase", "state_idle", "state_punish", "state_cinematic")]
-script = ExtResource("21_pcblf")
-state_attack = NodePath("../EnemyStateMachine/BSAttack")
-state_jumpchase = NodePath("../EnemyStateMachine/BSJumpChase")
-state_chase = NodePath("../EnemyStateMachine/BSChase")
-state_idle = NodePath("../EnemyStateMachine/BSIdle")
-state_punish = NodePath("../EnemyStateMachine/BSPunishWindow")
-state_cinematic = NodePath("../EnemyStateMachine/BSCutScene")
-metadata/_custom_type_script = "uid://c5yujg5qkk83s"
-
 [node name="PLayerSensor" type="Area2D" parent="."]
 visible = false
 position = Vector2(0, -50)
 script = ExtResource("16_dyfso")
-search_duration = 3.0
+search_duration = 5.0
 metadata/_custom_type_script = "uid://4e0tbrxyjd4k"
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="PLayerSensor"]
@@ -525,7 +513,6 @@ polygon = PackedVector2Array(0, 0, 40, -32, 168, -32, 168, 32, 40, 32)
 
 [node name="LootDropper" type="Marker2D" parent="."]
 script = ExtResource("17_cgqcs")
-items = Array[ExtResource("18_elk0s")]([SubResource("Resource_yxkoc")])
 metadata/_custom_type_script = "uid://yabw8611i22b"
 
 [node name="EnemyHitParticles" type="Marker2D" parent="."]

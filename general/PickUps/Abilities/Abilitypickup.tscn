@@ -268,7 +268,6 @@ hit_particles = Array[ExtResource("5_6a07l")]([SubResource("Resource_3igyf"), Su
 destroy_particles = Array[ExtResource("5_6a07l")]([SubResource("Resource_c2j51"), SubResource("Resource_hp01b")])
 hit_audio = ExtResource("3_hp01b")
 destroy_audio = ExtResource("2_c2j51")
-prop_type = null
 metadata/_custom_type_script = "uid://dbtpma31b3x4b"
 
 [node name="DamageArea" type="Area2D" parent="Breakable"]

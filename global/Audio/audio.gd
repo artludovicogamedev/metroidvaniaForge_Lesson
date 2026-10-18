@@ -33,11 +33,12 @@ func _ready() -> void:
 		audio_pool.append(audio_player)
 	pass
 
-func play_audio_stream( audio : AudioStream ) -> void :
+func play_audio_stream( audio : AudioStream , audio_vol : float = 0) -> void :
+	var av = audio_vol
 	if audio == null:
 		return
 	if ui_audio_player:
-		ui_audio_player.play_stream(audio)
+		ui_audio_player.play_stream(audio, 0 , av)
 	pass
 
 #region ui functions 

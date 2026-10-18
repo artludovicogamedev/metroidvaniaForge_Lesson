@@ -24,7 +24,7 @@ func enter() -> void :
 	await enemy.animation.animation_finished
 	#emit signal here and tell player camera to use the level bounds
 	#signal also tells that boss HUD should be hidden
-	SceneManager.boss_defeated.emit()
+	#SceneManager.boss_defeated.emit()
 	enemy.queue_free()
 	pass
 

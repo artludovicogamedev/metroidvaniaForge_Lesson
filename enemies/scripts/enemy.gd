@@ -67,7 +67,7 @@ func SetUp() -> void :
 func _physics_process(delta: float) -> void:
 	blackboard.update_distance_to_target(global_position)
 	statemachine.change_state(decisionengine.decide())
-
+	
 	if is_affected_by_gravity :
 		velocity += get_gravity() * delta * blackboard.gravity_multiplier
 	statemachine.physics_update(delta)
@@ -86,12 +86,12 @@ func change_direction(nd : float) -> void :
 		attack_area.flipattack(nd)
 	pass
 
-func play_animation(animname : String) -> void :
+func play_animation(animname: String) -> void:
 	if animation.has_animation(animname):
-		animation.play(animname)
-	else:
-		printerr("missing animation :" , animname)
-	pass
+		if animation.current_animation != animname or not animation.is_playing():
+			animation.play(animname)
+		else:
+			printerr("missing animation: ", animname)
 
 func on_damage_taken(a : AttackArea) -> void :
 	blackboard.damage_source = a

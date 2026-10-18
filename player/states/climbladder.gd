@@ -34,6 +34,8 @@ func handle_input( _event : InputEvent ) -> PlayerState :
 func process(_delta: float) -> PlayerState:
 	var direction := Input.get_axis("up", "down")
 	
+	
+	
 	if entered_ladder :
 		if direction != 0:
 			player.velocity.y = direction * climbSpeed

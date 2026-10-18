@@ -39,7 +39,7 @@ func update_controller_type (event :InputEvent) -> void:
 	if event is InputEventMouseButton or event is InputEventKey:
 		controller_type = "keyboard"
 	elif event is InputEventJoypadButton :
-		controller_type = ""
+		get_controller_type(event.device)
 		
 func get_controller_type ( device_id : int) -> void :
 	var n : String = Input.get_joy_name( device_id ).to_lower()
@@ -54,7 +54,7 @@ func get_controller_type ( device_id : int) -> void :
 		#controller_type = "playstation"
 	else : 
 		controller_type = "unknown"
-	
+	print("Controller Type : " , controller_type)
 	set_process_input(false)
 	pass
 	
@@ -63,5 +63,5 @@ func on_hint_changed(hint : String) -> void:
 		visible = false
 	else :
 		visible = true
-		sprite_2d.frame = HINT_MAP[controller_type].get(hint, "0")
+		sprite_2d.frame = HINT_MAP[controller_type].get(hint, 0)
 	pass

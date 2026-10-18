@@ -5,14 +5,20 @@ signal load_scene_started
 signal new_scene_ready( target_name : String , offset : Vector2)
 signal load_scene_finished
 signal scene_entered(uid :String)
+
+signal cinematic_sequence_finished
+signal original_area_limits(cl:float,cr:float,cb:float,ct:float,cc:float)
+
+#boss triggered signals
 signal check_boss_cinematic()
 signal play_cinematic()
-signal cinematic_sequence_finished
 signal boss_area_entered
 signal boss_area_limits(cl:float,cr:float,cb:float,ct:float,cc:float)
-signal original_area_limits(cl:float,cr:float,cb:float,ct:float,cc:float)
 signal boss_theme_music(sfx : AudioStream)
 signal boss_defeated
+signal boss_item_collected
+#boss triggered signals
+
 @warning_ignore_restore("unused_signal")
 
 var current_scene_uid : String

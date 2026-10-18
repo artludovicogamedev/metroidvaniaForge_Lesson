@@ -4,8 +4,10 @@ extends Area2D
 
 signal damage_taken(attackarea)
 signal block_damage_taken(attackarea)
+@export var damageaudioVolume : float = 0
 @export var damageaudio : AudioStream
-@onready var blocking_area: CollisionShape2D = %BlockingArea
+@export var blocking_area : CollisionShape2D
+#@onready var blocking_area: CollisionShape2D = %BlockingArea
 
 func _ready() -> void:
 	pass
@@ -13,7 +15,7 @@ func _ready() -> void:
 func take_damage(attackarea : AttackArea) -> void :
 	damage_taken.emit(attackarea)
 	block_damage_taken.emit(attackarea)
-	Audio.play_audio_stream(damageaudio)
+	Audio.play_audio_stream(damageaudio ,-35.0)
 	pass
 
 func make_invulnerable(dur : float = 1.0) -> void :
@@ -31,6 +33,7 @@ func end_invulnerable() -> void :
 	pass
 
 func reposition_damage_area(ax : float ,ay :float ,apx : float , apy : float) -> void :
-	blocking_area.shape.size = Vector2(ax,ay)
-	blocking_area.position = Vector2(apx,apy)
+	if blocking_area :
+		blocking_area.shape.size = Vector2(ax,ay)
+		blocking_area.position = Vector2(apx,apy)
 	pass

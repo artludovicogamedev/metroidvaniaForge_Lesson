@@ -52,14 +52,6 @@ func enter() -> void :
 	timer = 0	
 	on_cooldown = true
 	blackboard.can_decide = false
-
-	
-	#print("Animation Name : " , anim , 
-	#" hurtbox X : ",hurtbox_size_x ,
-	#" hurtbox Y : " , hurtbox_size_y , 
-	#" hurtbox position x : " , hurtbox_position_x,
-	#" hurtbox position y : " , hurtbox_position_y,	
-	#" Damage : " ,finaldamage)
 	pass
 	
 	#distance to target - attack1 triggers at 90 
@@ -94,19 +86,7 @@ func physics_update(_delta: float) -> void:
 		var sample : float = attack_velocity_curve.sample(timer / duration)
 		enemy.velocity.x = reposition_distance * sample * blackboard.dir
 	pass
-	
-#rework 
-# can_attack becomes can_jump attack - move the attack animation logic here
-# can_axe_attack - move attack animation here 
-# can kick attack - move kick animation here 
-#func can_axe_attack() -> bool :
-	#if blackboard.distance_to_target <= attack_range and not on_cooldown:
-		#distancetotarget = blackboard.distance_to_target
-		#if distancetotarget > 80 :
-			#jump_attack_pattern()
-			#return true
-	#return false
-	#
+
 func can_attack() -> bool :
 	#attack cooldown will vary
 	if blackboard.distance_to_target <= attack_range and not on_cooldown:

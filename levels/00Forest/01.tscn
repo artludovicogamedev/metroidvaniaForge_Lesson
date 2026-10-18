@@ -362,6 +362,7 @@ process_material = SubResource("ParticleProcessMaterial_nhx16")
 
 [node name="LevelTransition" parent="." instance=ExtResource("4_lnch2")]
 position = Vector2(1426, 188)
+waittime = 0.25
 size = 11
 location = 1
 target_level = "uid://bxeftv3hdojwp"

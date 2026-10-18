@@ -40,12 +40,15 @@ func on_new_cinematic_ready( ) -> void :
 	pass
 
 func _on_player_entered( _n : Node2D) -> void :
+	#when player enters the Area2D
 	SceneManager.boss_area_entered.emit()
 	
+	#Switches player to Idle state
 	if _n is Player :
 		_n.can_move = false
 		_n.change_state(_n.current_state.idle)
-		
+	
+	#disconnect so this area2D can only trigger the boss battle once
 	area_2d.body_entered.disconnect( _on_player_entered )
 	pass
 

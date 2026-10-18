@@ -49,7 +49,7 @@ func on_damage_taken (attack_area : AttackArea) -> void :
 		dir *= - 1
 	
 	if hp > 0 :
-		Audio.play_spatial_soundfx(hit_audio , pos)
+		Audio.play_spatial_soundfx(hit_audio ,pos, 0.5,-25.5)
 		damage_taken.emit()
 		for p in hit_particles :
 			Visualfx.hit_particles( pos , dir , p)

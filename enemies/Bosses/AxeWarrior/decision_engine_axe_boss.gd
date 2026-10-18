@@ -7,7 +7,6 @@ extends DecisionEngine
 @export var state_idle : BSIdle
 @export var state_punish : BSPunishWindow
 @export var state_cinematic : BSCutScene
-@export var attack_distance : float = 40
 
 
 @onready var es_move: ESMove = %ESMove
@@ -19,7 +18,6 @@ var previous_state : EnemyState
 var cinematic_triggered : bool = false
 func _ready() -> void:
 	await super()
-	SceneManager.play_cinematic.connect(_trigger_cinematic)
 	pass
 
 func decide() -> EnemyState :
@@ -40,9 +38,8 @@ func decide() -> EnemyState :
 	if current_state is ESDeath or not blackboard.can_decide :
 		return null
 		
-	#forces enemy to attack even if blackboard.target is null
-	if blackboard.just_jumped:
-		return state_attack
+	#if blackboard.just_jumped:
+		#return state_attack
 
 	if blackboard.punishattack and blackboard.just_attacked:
 		return state_punish
@@ -53,39 +50,8 @@ func decide() -> EnemyState :
 	
 	if blackboard.target :
 		return choose_next_action()
-
-	#if blackboard.distance_to_target <= 50:
-		#return choose_close_range_move()
-	#
-	##forces the boss to attack even if there is no target after jump 
-	#if blackboard.just_jumped:
-		#return state_attack
-		#
-	## transition from state attack to punish regardless 
-	#if blackboard.punishattack and blackboard.just_attacked:
-		#return state_punish
-#
-	#if blackboard.just_stepped_back : 
-		#blackboard.just_stepped_back = false
-		#return choose_after_step_back()
-		#
-	#if blackboard.target:
-		#if state_jumpchase.decide_to_jump():
-			#return state_jumpchase
-		#
-		#if state_attack.can_attack():
-			#return state_attack
-	#
-		#if blackboard.distance_to_target <= 50:
-			#return choose_close_range_move()
-	#
-		#return state_chase
- #
-	#if blackboard.edge_detected :
-		#enemy.change_direction(-blackboard.dir)
 	return es_move
 	
-
 func choose_next_action() -> EnemyState :
 	var roll = randi_range(0,99)
 	
@@ -133,5 +99,4 @@ func choose_close_range_move() -> EnemyState :
 func _trigger_cinematic() -> void :
 	blackboard.cinematic_state_played = true
 	cinematic_triggered = true
-	SceneManager.play_cinematic.disconnect(_trigger_cinematic)
 	pass
